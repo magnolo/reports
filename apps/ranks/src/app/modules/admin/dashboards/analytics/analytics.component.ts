@@ -91,6 +91,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   countriesData!: CountriesData;
   indCountriedData?: CountriesData;
   active?: string;
+  chartData?: any;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -120,6 +121,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     if (this.active === indicator.id) {
       this.active = undefined;
       this.indCountriedData = undefined;
+      this.chartData = undefined;
       return;
     }
     this.active = indicator.id;
@@ -127,6 +129,94 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
       result[item.country_code] = { value: item.score };
       return result;
     }, {});
+
+    this.chartData = {
+      series: [
+        {
+          name: 'Countries',
+          data: indicator.ranks.map((rank: any) => rank.score),
+        },
+      ],
+      chart: {
+        type: 'bar',
+        animations: {
+          speed: 400,
+          animateGradually: {
+            enabled: false,
+          },
+        },
+        fontFamily: 'inherit',
+        foreColor: 'inherit',
+        width: '100%',
+        height: '100%',
+
+        toolbar: {
+          show: false,
+        },
+        zoom: {
+          enabled: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          dataLabels: {
+            position: 'top', // top, center, bottom
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val: any) {
+          return val + '%';
+        },
+        offsetY: -20,
+        style: {
+          fontSize: '12px',
+          colors: ['#304758'],
+        },
+      },
+
+      xaxis: {
+        categories: indicator.ranks.map((rank: any) => rank.rank),
+        position: 'bottom',
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: 'gradient',
+            gradient: {
+              colorFrom: '#4F46E5',
+              colorTo: '#BED1E6',
+              stops: [0, 180],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
+            },
+          },
+        },
+        tooltip: {
+          enabled: true,
+        },
+      },
+      yaxis: {
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: false,
+          formatter: function (val: any) {
+            return val + '%';
+          },
+        },
+      },
+    }
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -244,106 +334,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
    */
   private _prepareChartData(): void {
     // Visitors
-    this.chartVisitors = {
-      series: [
-        {
-          name: 'Countries',
-          data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
-        },
-      ],
-      chart: {
-        type: 'bar',
-        animations: {
-          speed: 400,
-          animateGradually: {
-            enabled: false,
-          },
-        },
-        fontFamily: 'inherit',
-        foreColor: 'inherit',
-        width: '100%',
-        height: '100%',
 
-        toolbar: {
-          show: false,
-        },
-        zoom: {
-          enabled: false,
-        },
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 10,
-          dataLabels: {
-            position: 'top', // top, center, bottom
-          },
-        },
-      },
-      dataLabels: {
-        enabled: false,
-        formatter: function (val: any) {
-          return val + '%';
-        },
-        offsetY: -20,
-        style: {
-          fontSize: '12px',
-          colors: ['#304758'],
-        },
-      },
-
-      xaxis: {
-        categories: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ],
-        position: 'top',
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        crosshairs: {
-          fill: {
-            type: 'gradient',
-            gradient: {
-              colorFrom: '#D8E3F0',
-              colorTo: '#BED1E6',
-              stops: [0, 100],
-              opacityFrom: 0.4,
-              opacityTo: 0.5,
-            },
-          },
-        },
-        tooltip: {
-          enabled: true,
-        },
-      },
-      yaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-          formatter: function (val: any) {
-            return val + '%';
-          },
-        },
-      },
-    };
 
     // {
     //   chart: {
