@@ -15,13 +15,19 @@ export interface Product {
   rating?: number;
 }
 
-
-export interface Tags{
-    slug: string;
-    name: string;
-    short: string
+export interface Tags {
+  slug: string;
+  name: string;
+  short: string;
 }
 
+export interface Rank {
+  score: number;
+  country_code: string;
+  country_name: string;
+  rank: number;
+  trend: number;
+}
 export interface Report {
   slug: string;
   name: string;
@@ -37,13 +43,7 @@ export interface Report {
   type: 'group' | 'composite';
   score: number;
   trend: number;
-  ranks: {
-    score: number;
-    country_code: string;
-    country_name: string;
-    rank: number;
-    trend: number;
-  }[];
+  ranks: Rank[];
   tags?: Tags[];
   indicators_count: number;
   indicators?: {
@@ -52,15 +52,15 @@ export interface Report {
   }[];
 }
 
-export interface Indicator{
+export interface Indicator {
   slug: string;
   name: string;
   description: string;
-  parent:{
-    type: 'indicator' | 'report' | 'group' | null | undefined,
+  parent: {
+    type: 'indicator' | 'report' | 'group' | null | undefined;
     slug: string | undefined;
     name: string | undefined;
-  }
+  };
 }
 
 export interface Category {
@@ -73,8 +73,7 @@ export interface Category {
   reports?: Report[];
 }
 
-
-export interface News{
+export interface News {
   slug: string;
   created_at: Date;
   name: string;
@@ -82,5 +81,5 @@ export interface News{
   text: string;
   image: {
     url: string;
-  }
+  };
 }

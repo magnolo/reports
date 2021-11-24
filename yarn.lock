@@ -1424,6 +1424,11 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.3.tgz#e45e384e4b8ec16bce2fd903af78450f6bf7ec98"
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
+"@jagomf/countrieslist@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@jagomf/countrieslist/-/countrieslist-2.1.0.tgz#723cbf2aac6799c2524685c815c7801980418683"
+  integrity sha512-58iYTWSmYPq6Rci0kmAfExAuDn1DsKVbvo80eKJn+NgqxGNWQNLH7Mtm425q4FJlOFef0n8yG+T+KxhxeLOeLQ==
+
 "@jest/console@^27.2.2", "@jest/console@^27.3.1":
   version "27.3.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-27.3.1.tgz#e8ea3a475d3f8162f23d69efbfaa9cbe486bee93"
@@ -3400,7 +3405,7 @@ chownr@^2.0.0:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-2.0.0.tgz#15bfbe53d2eab4cf70f18a8cd68ebe5b3cb1dece"
   integrity sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==
 
-chroma-js@^2.1.2:
+chroma-js@^2.1.0, chroma-js@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-2.1.2.tgz#1075cb9ae25bcb2017c109394168b5cf3aa500ec"
   integrity sha512-ri/ouYDWuxfus3UcaMxC1Tfp3IE9K5iQzxc2hSxbBRVNQFut1UuGAsZmiAf2mOUubzGJwgMSv9lHg+XqLaz1QQ==
@@ -3789,6 +3794,15 @@ cosmiconfig@^7.0.0, cosmiconfig@^7.0.1:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+countries-map@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/countries-map/-/countries-map-4.2.0.tgz#4d70e93e188366fd182a8b0c6fbbeaf45e40f947"
+  integrity sha512-hGleA3UVNGzYByluTqOPcHCryEGJ6WkJp6k+9qTbZJTkedKC4LYl/3H11xyKpZ3yebdorRo1m4JZj9DRDlTutA==
+  dependencies:
+    "@jagomf/countrieslist" "^2.1.0"
+    chroma-js "^2.1.0"
+    tslib "^2.0.0"
 
 create-require@^1.1.0:
   version "1.1.1"

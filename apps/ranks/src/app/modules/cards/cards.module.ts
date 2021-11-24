@@ -1,3 +1,4 @@
+import { RanksModule } from './../../../../../../libs/fuse/src/lib/components/ranks/ranks.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
@@ -47,7 +48,8 @@ export const routes: Route[] = [
         MatTooltipModule,
         FuseCardModule,
         SharedModule,
-        NgApexchartsModule
+        NgApexchartsModule,
+        RanksModule
     ]
 })
 export class CardsModule

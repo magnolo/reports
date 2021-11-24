@@ -15,38 +15,51 @@ import { AnalyticsService } from './analytics.service';
 import Sunburst from 'sunburst-chart';
 import { SUNBURST_DATA } from './sunburst.data';
 import * as chroma from 'chroma-js';
+import { Rank } from '@twentythree/api-interfaces';
+import { EPI_DATA, EPI_TREE } from './epi';
+import { Epi } from './epi.class';
+import { CountriesData } from 'countries-map';
 
 @Component({
   selector: 'analytics',
   templateUrl: './analytics.component.html',
-  encapsulation: ViewEncapsulation.None,
+  // encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./analytics.component.scss'],
 })
 export class AnalyticsComponent implements OnInit, OnDestroy {
   @ViewChild('sunburst') set setSurbst(elem: ElementRef) {
     if (elem) {
-      setTimeout(() => {
-        this.zone.runOutsideAngular(() => {
-          const myChart = Sunburst();
+      this.zone.runOutsideAngular(() => {
+        if (!this.sunburstChart) {
+          this.sunburstChart = Sunburst();
           const colors = chroma
             .scale(['yellow', '008ae5'])
             .domain([0, 17000])
             .classes([1000, 4000, 8000, 12000, 16540]);
 
-          myChart
+          this.sunburstChart
             // .onClick((node) => {
             //   console.log('CLICKEd', node);
             //   return true
             // })
-            // .color((node: any) => {
-            //   console.log(colors(node.value), node.value)
-            //   return  colors(node.value) as any;
-            // })
-            .centerRadius(0.05)
-            .width(elem.nativeElement.clientWidth)
-            .height(elem.nativeElement.clientWidth)
-            .data(SUNBURST_DATA)(elem.nativeElement);
-        });
+            // .strokeColor('transparent')
+            .minSliceAngle(0)
+            .labelOrientation('angular')
+            .radiusScaleExponent(1)
+            .nodeClassName('node')
+            .color((node: any) => {
+              return node.color || '#ccc';
+            })
+            .tooltipContent((fn: any) => {
+              console.log(fn);
+              return '<h2>' + fn.value + '%</h2>';
+            })
+            .centerRadius(0.5)
+            .width(450)
+            .height(450)
+            .data(this.epiTree)(elem.nativeElement);
+        }
       });
     }
   }
@@ -62,6 +75,23 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   chartLanguage!: any;
   data: any;
 
+  sunburstChart: any;
+  country: Rank = {
+    country_name: 'Germany',
+    country_code: 'de',
+    score: 87,
+    trend: 5,
+    rank: 3,
+  };
+
+  epi;
+
+  epiTree: any;
+  visibleIndicators: string[] = [];
+  countriesData!: CountriesData;
+  indCountriedData?: CountriesData;
+  active?: string;
+
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   /**
@@ -71,7 +101,33 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     private _analyticsService: AnalyticsService,
     private _router: Router,
     private zone: NgZone
-  ) {}
+  ) {
+    this.epi = new Epi();
+    this.epiTree = this.epi.getTree();
+    this.generateCountriesData();
+    console.log(this.epiTree);
+  }
+
+  generateCountriesData() {
+    this.countriesData = this.epiTree.ranks.reduce((result: any, item: any) => {
+      result[item.country_code] = { value: item.score };
+      return result;
+    }, {});
+    console.log(this.countriesData);
+  }
+
+  setIndMap(indicator: any) {
+    if (this.active === indicator.id) {
+      this.active = undefined;
+      this.indCountriedData = undefined;
+      return;
+    }
+    this.active = indicator.id;
+    this.indCountriedData = indicator.ranks.reduce((result: any, item: any) => {
+      result[item.country_code] = { value: item.score };
+      return result;
+    }, {});
+  }
 
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
@@ -107,6 +163,23 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
         },
       },
     };
+  }
+
+  isVisible(id: string) {
+    return this.visibleIndicators.includes(id);
+  }
+
+  toggleVisibleIndicator(id: string) {
+    const idx = this.visibleIndicators.indexOf(id);
+    if (idx > -1) {
+      this.visibleIndicators.splice(idx, 1);
+    } else {
+      this.visibleIndicators.push(id);
+    }
+  }
+
+  selectCountry(country: any) {
+    console.log(country);
   }
 
   /**
@@ -174,7 +247,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     this.chartVisitors = {
       series: [
         {
-          name: 'Inflation',
+          name: 'Countries',
           data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2],
         },
       ],
@@ -270,7 +343,6 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
           },
         },
       },
-
     };
 
     // {

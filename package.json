@@ -32,6 +32,7 @@
     "@tailwindcss/typography": "^0.4.1",
     "apexcharts": "^3.30.0",
     "chroma-js": "^2.1.2",
+    "countries-map": "^4.2.0",
     "crypto-js": "^4.1.1",
     "faker": "^5.5.3",
     "lodash-es": "^4.17.21",

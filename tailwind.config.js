@@ -217,7 +217,9 @@ const config = {
             }),
             maxHeight               : theme => ({
                 ...theme('extendedSpacing'),
-                none: 'none'
+                none: 'none',
+                'screen-3/4': '75vh',
+                'screen-1/2': '50vh'
             }),
             width                   : theme => ({
                 ...theme('extendedSpacing')

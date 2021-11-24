@@ -1,3 +1,4 @@
+import { RanksModule } from './../../../../../../../../libs/fuse/src/lib/components/ranks/ranks.module';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +17,7 @@ import { AnalyticsComponent } from './analytics.component';
 import { FuseCardModule } from '@twentythree/fuse/components/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CountriesMapModule } from 'countries-map';
 
 @NgModule({
     declarations: [
@@ -36,7 +38,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
         MatTooltipModule,
         NgApexchartsModule,
         SharedModule,
-        FuseCardModule
+        FuseCardModule,
+        RanksModule,
+        CountriesMapModule
     ]
 })
 export class AnalyticsModule

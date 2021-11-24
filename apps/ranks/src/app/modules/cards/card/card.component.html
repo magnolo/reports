@@ -33,7 +33,7 @@
   </div>
   <!-- bg-gray-100 dark:bg-opacity-10 -->
   <div class="flex flex-1 flex-col p-8 items-center relative mt-8 justify-end ">
-    <div class="flex bg-white w-full p-4 rounded-md shadow-sm">
+    <!-- <div class="flex bg-white w-full p-4 rounded-md shadow-sm">
       <div class="flex flex-col text-center  ">
         <div class="bg-accent p-1 px-2 text-on-accent text-sm rounded-tl-sm rounded-tr-sm">Global ranking</div>
         <div class="text-3xl font-bold p-2 border-solid border-accent border-2 rounded-bl-sm rounded-br-sm text-accent">
@@ -60,7 +60,13 @@
         <img
           [src]="'assets/images/countries/all/' + item.ranks[0].country_code + '/vector.svg'">
       </div>
-    </div>
+    </div> -->
+
+    <country-rank class="w-full" [rank]="item.ranks[0]"></country-rank>
+
+
+
+
     <!-- <div class="flex flex-col justify-end flex-auto w-full">
        <apx-chart
         class="flex-auto w-full max-h-16"

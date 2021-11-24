@@ -1,0 +1,24 @@
+:host {
+  .sun {
+    &::ng-deep {
+      .sunburst-viz {
+        text {
+          stroke: transparent !important;
+          textPath {
+            stroke: transparent !important;
+          }
+        }
+      }
+    }
+  }
+  countries-map {
+    &::ng-deep {
+      g, path {
+        stroke: transparent !important;
+        &:hover{
+          stroke: #fff !important;
+        }
+      }
+    }
+  }
+}
