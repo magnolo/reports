@@ -7,7 +7,7 @@ import { InitialDataResolver } from './app.resolver';
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 export const appRoutes: Route[] = [
   // Redirect empty path to '/example'
-  { path: '', pathMatch: 'full', redirectTo: 'example' },
+   { path: '', pathMatch: 'full', redirectTo: 'home' },
 
   // // Redirect signed in user to the '/example'
   // //
@@ -85,39 +85,35 @@ export const appRoutes: Route[] = [
     },
     children: [
       // Dashboards
-      {
-        path: '',
-        children: [
-          {
-            path: 'cards',
-            // data: {
-            //   layout: 'classic',
-            // },
-            loadChildren: () =>
-              import('./modules/cards/cards.module').then((m) => m.CardsModule),
-          },
-          {
-            path: 'analytics',
-            // data: {
-            //   layout: 'classic',
-            // },
-            loadChildren: () =>
-              import(
-                './modules/admin/dashboards/analytics/analytics.module'
-              ).then((m) => m.AnalyticsModule),
-          },
 
-          {
-            path: 'details',
-            // data: {
-            //   layout: 'classic',
-            // },
-            loadChildren: () =>
-              import('./modules/admin/dashboards/project/project.module').then(
-                (m) => m.ProjectModule
-              ),
-          },
-        ],
+      {
+        path: 'home',
+        // data: {
+        //   layout: 'classic',
+        // },
+        loadChildren: () =>
+          import('./modules/cards/cards.module').then((m) => m.CardsModule),
+      },
+      {
+        path: 'analytics',
+        // data: {
+        //   layout: 'classic',
+        // },
+        loadChildren: () =>
+          import('./modules/admin/dashboards/analytics/analytics.module').then(
+            (m) => m.AnalyticsModule
+          ),
+      },
+
+      {
+        path: 'details',
+        // data: {
+        //   layout: 'classic',
+        // },
+        loadChildren: () =>
+          import('./modules/admin/dashboards/project/project.module').then(
+            (m) => m.ProjectModule
+          ),
       },
     ],
   },
