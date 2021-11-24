@@ -70,7 +70,7 @@ const config = {
     darkMode    : 'class',
     important   : true,
     purge       : {
-        enabled: process.env.TAILWIND_MODE === 'build',
+        enabled: false, //process.env.TAILWIND_MODE === 'build',
         content: ['./src/**/*.{html,scss,ts}'],
         options: {
             safelist: {
