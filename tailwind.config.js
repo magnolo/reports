@@ -70,8 +70,8 @@ const config = {
     darkMode    : 'class',
     important   : true,
     purge       : {
-        enabled: false, //process.env.TAILWIND_MODE === 'build',
-        content: ['./src/**/*.{html,scss,ts}'],
+        enabled: process.env.TAILWIND_MODE === 'build',
+        content: ['./apps/**/*.{html,scss,ts}', './libs/**/*.{html,scss,ts}'],
         options: {
             safelist: {
                 standard: ['dark'],
