@@ -13,10 +13,25 @@
   }
   countries-map {
     &::ng-deep {
-      g, path {
+      .countryxx{
+        cursor: pointer !important;
+      }
+      path {
         stroke: transparent !important;
-        &:hover{
-          stroke: #fff !important;
+        &.countryxx {
+          &:hover{
+            stroke: #fff !important;
+
+          }
+        }
+      }
+      g {
+        stroke: transparent !important;
+        cursor: pointer;
+        &:hover {
+          path {
+            stroke: #fff !important;
+          }
         }
       }
     }

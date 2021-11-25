@@ -150,6 +150,8 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
       this.sunburstChart.focusOnNode(node);
     }
 
+    node = node || this.epiTree;
+
     this.currentIndicator = node;
     if (this.selectedCountry) {
       const c = node.ranks.find(
@@ -354,6 +356,8 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   }
 
   selectCountry(country: any) {
+    if (!country || !country.country) return;
+
     const c = COUNTRY_CODES.find(
       (codes) =>
         codes.alpha2Code.toLocaleLowerCase() === country.country.toLowerCase()
