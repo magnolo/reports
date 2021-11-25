@@ -1,10 +1,10 @@
 <div class="flex flex-col flex-auto w-full">
-  <div class="flex flex-col items-center min-h-screen-1/2 justify-center">
+  <div class="flex flex-col items-center min-h-50 md:min-h-screen-1/2 justify-center">
     <div class="absolute w-full left-0 top-0 max-h-full pointer-events-none">
       <img
         style=" -webkit-mask-image: linear-gradient(to top, transparent 25%, black 75%);
       mask-image: linear-gradient(to top, transparent 25%, black 75%);"
-        class="w-full h-full object-size-fit dark:mix-blend-soft-light"
+        class="w-full h-full object-size-fit dark:mix-blend-soft-light opacity-40 dark:opacity-100"
         [src]="'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1575&q=80'">
       <!-- <div class="absolute w-full top-0 left-1 bg-gradient-to-b from-red-500 to-pink-500 h-full"></div> -->
     </div>
@@ -13,8 +13,8 @@
     [style.backgroundImage]="'url('+ 'https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1575&q=80' +')'">
     <div class="h-full w-full bg-gradient-to-b from-black opacity-90"></div>
   </div> -->
-    <div class="max-w-screen-xl p-6 sm:p-10 mx-auto w-full relative text-white">
-      <h2 class="text-xl  font-semibold">Environmental Performance Index</h2>
+    <div class="max-w-screen-xl p-6 sm:p-10 mx-auto w-full relative dark:text-white">
+      <h2 class="text-xl font-semibold">Environmental Performance Index</h2>
       <div class="mt-1 text-4xl sm:text-7xl font-extrabold tracking-tight leading-10 pl-3 border-l-8 border-solid border-primary">EPI 2020</div>
       <div class="mt-3 sm:text-2xl tracking-tight">
         <div class="max-w-screen-sm">
@@ -26,14 +26,39 @@
     </div>
   </div>
 
-  <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
-
-    <div class="w-full flex items-center justify-center mb-8">
+  <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8 relative">
+    
+    <div class="w-full flex items-center justify-center mb-8 flex-col md:flex-row ">
       <div
         #sunburst
-        class="w-1/2 flex items-center sun"></div>
-      <div class="w-1/2 flex flex-col items-center justify-center">
+        class="w-full md:w-1/2 flex items-center sun justify-center md:justify-start"></div>
+      <div class="w-full md:w-1/2 flex flex-col items-center justify-center mt-10 md:mt-0">
+        <div class="flex items items-center w-full justify-center mb-4">
+          <div
+            class="flex row items-center"
+            *ngIf="!selectedCountry">
+            <div class="text-2xl ml-4">Global Overview</div>
+          </div>
+
+          <div
+            class="flex row items-center"
+            *ngIf="selectedCountry">
+            <img
+              class="h-8 rounded"
+              [src]="'assets/images/countries/flags/'+ selectedCountry.country_code + '.svg'">
+            <div class="text-2xl ml-4 leading-tight whitespace-nowrap ">{{ selectedCountry.country_name }}</div>
+            <button
+            (click)="removeCountrySelection()"
+            mat-icon-button>
+            <mat-icon
+              class="icon-size-5"
+              [svgIcon]="'heroicons_solid:x'"></mat-icon>
+          </button>
+          </div>
+        </div>
+
         <div class="text-2xl font-semibold mb-8">EPI - {{ currentIndicator.name }}</div>
+      
         <country-rank
           [rank]="country"
           class="w-full"></country-rank>
@@ -43,7 +68,7 @@
       </div>
     </div>
     <div
-      class="w-full max-w-screen-xl mx-auto flex flex-col flex-auto p-6 "
+      class="w-full max-w-screen-xl mx-auto flex flex-col flex-auto p-6 px-0 md:px-6"
       *ngIf="countriesData">
       <countries-map
         [showCaption]="false"
@@ -54,7 +79,7 @@
         backgroundColor="transparent"></countries-map>
     </div>
 
-    <div class="w-full max-w-screen-md mx-auto sm:col-span-6 flex flex-col flex-auto p-6 ">
+    <div class="w-full max-w-screen-md mx-auto sm:col-span-6 flex flex-col flex-auto p-6 px-0 md:px-6 ">
       <ng-container *ngTemplateOutlet="treeView; context: { $implicit: epiTree, lvl: 0 }"></ng-container>
     </div>
 
@@ -106,9 +131,9 @@
         class="border-solid border-primary border-2 p-4 rounded-bl-sm rounded-br-sm"
         [class]="'ml-'+ (lvl * 4)"
         *ngIf="active === item.id && indCountriedData">
+        <!-- (chartSelect)="selectCountry($event)" -->
         <countries-map
           [showCaption]="false"
-          (chartSelect)="selectCountry($event)"
           minColor="#ccc"
           maxColor="#4F46E5"
           [data]="indCountriedData"

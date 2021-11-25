@@ -11,12 +11,12 @@
     <div class="flex w-full justify-around">
       <div class="flex flex-col items-center">
         <div class="text-lg font-medium tracking-tight leading-6 truncate">Score</div>
-        <div class="text-3xl font-semibold tracking-tight leading-tight">{{ item.score }}%</div>
+        <div class="text-3xl font-semibold tracking-tight leading-tight">{{ item.score }}</div>
 
       </div>
       <div class="flex flex-col items-center">
         <div class="text-lg font-medium tracking-tight leading-6 truncate">Trend</div>
-        <div class="text-3xl font-semibold tracking-tight leading-tight">+{{ item.trend }}</div>
+        <div class="text-3xl font-semibold tracking-tight leading-tight"><ng-container *ngIf="item.trend > 0">+</ng-container>{{ item.trend }}</div>
 
       </div>
     </div>

@@ -20,6 +20,7 @@ import { Rank } from '@twentythree/api-interfaces';
 import { EPI_DATA, EPI_TREE } from './epi';
 import { Epi } from './epi.class';
 import { CountriesData } from 'countries-map';
+import { COUNTRY_CODES } from './countries';
 
 @Component({
   selector: 'analytics',
@@ -33,22 +34,15 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     if (elem) {
       this.zone.runOutsideAngular(() => {
         if (!this.sunburstChart) {
+          const size =
+            this.elem.nativeElement.clientWidth < 400
+              ? this.elem.nativeElement.clientWidth * 0.8
+              : 450;
           this.sunburstChart = Sunburst();
-          const colors = chroma
-            .scale(['yellow', '008ae5'])
-            .domain([0, 17000])
-            .classes([1000, 4000, 8000, 12000, 16540]);
-
           this.sunburstChart
             .onClick((node: any) => {
-              console.log(this.deepFind(node.id));
-
-              this.sunburstChart.focusOnNode(node);
-              this.currentIndicator = node;
-              this.country = node.ranks[0];
-              this.generateCountriesData(node.ranks)
+              this.updateStates(node);
               this.cdr.detectChanges();
-
               return true;
             })
             // .strokeColor('transparent')
@@ -65,8 +59,8 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
             })
             .label((node: any) => node.short)
             .centerRadius(0.5)
-            .width(450)
-            .height(450)
+            .width(size)
+            .height(size)
             .data(this.epiTree)(elem.nativeElement);
         }
       });
@@ -85,13 +79,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   data: any;
 
   sunburstChart: any;
-  country: Rank = {
-    country_name: 'Germany',
-    country_code: 'de',
-    score: 87,
-    trend: 5,
-    rank: 3,
-  };
+  country!: Rank;
 
   epi;
 
@@ -102,6 +90,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   active?: string;
   chartData?: any;
   currentIndicator!: any;
+  selectedCountry?: any;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -112,13 +101,33 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     private _analyticsService: AnalyticsService,
     private _router: Router,
     private zone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private elem: ElementRef
   ) {
     this.epi = new Epi();
     this.epiTree = this.epi.getTree();
-    this.generateCountriesData();
-    this.country = this.epiTree.ranks[0];
-    this.currentIndicator = this.epiTree;
+    // this.generateCountriesData();
+    // this.country = this.epiTree.ranks[0];
+    // this.currentIndicator = this.epiTree;
+    this.updateStates(this.epiTree);
+  }
+
+  updateStates(node?: any) {
+    if (this.sunburstChart) {
+      this.sunburstChart.focusOnNode(node);
+    }
+
+    this.currentIndicator = node;
+    if (this.selectedCountry) {
+      this.country = node.ranks.find(
+        (rank: any) => rank.country_code === this.selectedCountry.country_code
+      );
+      console.log(this.country, node.ranks);
+    } else {
+      this.country = node.ranks[0];
+    }
+
+    this.generateCountriesData(node.ranks);
   }
 
   deepFind(id: string) {
@@ -147,10 +156,9 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   generateCountriesData(ranks?: any) {
     const r = ranks || this.epiTree.ranks;
     this.countriesData = r.reduce((result: any, item: any) => {
-      result[item.country_code] = { ...item, value: item.score };
+      result[item.country_code.toUpperCase()] = { ...item, value: item.score };
       return result;
     }, {});
-    console.log(this.countriesData);
   }
 
   setIndMap(indicator: any) {
@@ -162,97 +170,97 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     }
     this.active = indicator.id;
     this.indCountriedData = indicator.ranks.reduce((result: any, item: any) => {
-      result[item.country_code] = { value: item.score };
+      result[item.country_code.toUpperCase()] = { ...item, value: item.score };
       return result;
     }, {});
 
-    this.chartData = {
-      series: [
-        {
-          name: 'Countries',
-          data: indicator.ranks.map((rank: any) => rank.score),
-        },
-      ],
-      chart: {
-        type: 'bar',
-        animations: {
-          speed: 400,
-          animateGradually: {
-            enabled: false,
-          },
-        },
-        fontFamily: 'inherit',
-        foreColor: 'inherit',
-        width: '100%',
-        height: '100%',
+    // this.chartData = {
+    //   series: [
+    //     {
+    //       name: 'Countries',
+    //       data: indicator.ranks.map((rank: any) => rank.score),
+    //     },
+    //   ],
+    //   chart: {
+    //     type: 'bar',
+    //     animations: {
+    //       speed: 400,
+    //       animateGradually: {
+    //         enabled: false,
+    //       },
+    //     },
+    //     fontFamily: 'inherit',
+    //     foreColor: 'inherit',
+    //     width: '100%',
+    //     height: '100%',
 
-        toolbar: {
-          show: false,
-        },
-        zoom: {
-          enabled: false,
-        },
-      },
-      plotOptions: {
-        bar: {
-          borderRadius: 10,
-          dataLabels: {
-            position: 'top', // top, center, bottom
-          },
-        },
-      },
-      dataLabels: {
-        enabled: true,
-        formatter: function (val: any) {
-          return val + '%';
-        },
-        offsetY: -20,
-        style: {
-          fontSize: '12px',
-          colors: ['#304758'],
-        },
-      },
+    //     toolbar: {
+    //       show: false,
+    //     },
+    //     zoom: {
+    //       enabled: false,
+    //     },
+    //   },
+    //   plotOptions: {
+    //     bar: {
+    //       borderRadius: 10,
+    //       dataLabels: {
+    //         position: 'top', // top, center, bottom
+    //       },
+    //     },
+    //   },
+    //   dataLabels: {
+    //     enabled: true,
+    //     formatter: function (val: any) {
+    //       return val + '%';
+    //     },
+    //     offsetY: -20,
+    //     style: {
+    //       fontSize: '12px',
+    //       colors: ['#304758'],
+    //     },
+    //   },
 
-      xaxis: {
-        categories: indicator.ranks.map((rank: any) => rank.rank),
-        position: 'bottom',
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        crosshairs: {
-          fill: {
-            type: 'gradient',
-            gradient: {
-              colorFrom: '#4F46E5',
-              colorTo: '#BED1E6',
-              stops: [0, 180],
-              opacityFrom: 0.4,
-              opacityTo: 0.5,
-            },
-          },
-        },
-        tooltip: {
-          enabled: true,
-        },
-      },
-      yaxis: {
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-        labels: {
-          show: false,
-          formatter: function (val: any) {
-            return val + '%';
-          },
-        },
-      },
-    };
+    //   xaxis: {
+    //     categories: indicator.ranks.map((rank: any) => rank.rank),
+    //     position: 'bottom',
+    //     axisBorder: {
+    //       show: false,
+    //     },
+    //     axisTicks: {
+    //       show: false,
+    //     },
+    //     crosshairs: {
+    //       fill: {
+    //         type: 'gradient',
+    //         gradient: {
+    //           colorFrom: '#4F46E5',
+    //           colorTo: '#BED1E6',
+    //           stops: [0, 180],
+    //           opacityFrom: 0.4,
+    //           opacityTo: 0.5,
+    //         },
+    //       },
+    //     },
+    //     tooltip: {
+    //       enabled: true,
+    //     },
+    //   },
+    //   yaxis: {
+    //     axisBorder: {
+    //       show: false,
+    //     },
+    //     axisTicks: {
+    //       show: false,
+    //     },
+    //     labels: {
+    //       show: false,
+    //       formatter: function (val: any) {
+    //         return val + '%';
+    //       },
+    //     },
+    //   },
+    // };
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -305,7 +313,23 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   }
 
   selectCountry(country: any) {
-    console.log(country);
+    const c = COUNTRY_CODES.find(
+      (codes) =>
+        codes.alpha2Code.toLocaleLowerCase() === country.country.toLowerCase()
+    );
+
+    if (c) {
+      this.selectedCountry = {
+        country_name: c.englishShortName,
+        country_code: c.alpha2Code.toLowerCase(),
+      };
+      this.updateStates(this.currentIndicator);
+    }
+  }
+
+  removeCountrySelection() {
+    this.selectedCountry = undefined;
+    this.updateStates(this.currentIndicator);
   }
 
   /**

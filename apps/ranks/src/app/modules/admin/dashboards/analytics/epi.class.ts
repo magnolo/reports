@@ -2,9 +2,9 @@ import {
   EPI_DATA,
   EPI_NAMES,
   EPI_DATA_FULL,
-  COUNTRY_CODES,
   EPI_TREE,
 } from './epi';
+import {COUNTRY_CODES} from './countries';
 
 export class Epi {
   getRanksByIndicator(indicator: string) {
@@ -19,7 +19,7 @@ export class Epi {
       .map((item: any) => ({
         country_name: item.country,
         country_code: COUNTRY_CODES.find((code) => code.alpha3Code === item.iso)
-          ?.alpha2Code,
+          ?.alpha2Code.toLocaleLowerCase(),
         score: item[scoreField],
         rank: item[rankField],
         trend: item[changeField],
