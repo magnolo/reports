@@ -212,6 +212,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     }, {});
 
     // this.chartData = {
+    // const chartData: any = {
     //   series: [
     //     {
     //       name: 'Countries',
@@ -304,6 +305,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     //     },
     //   },
     // };
+    // console.log(chartData)
   }
 
   // -----------------------------------------------------------------------------------------------------

@@ -115,7 +115,7 @@ export class SearchDrawerComponent implements OnInit, OnDestroy {
   }
 
   setCountry(selectedCountry: string) {
-    if (this.config.selectedCountry === selectedCountry) {
+    if (this.config.selectedCountry === selectedCountry || !selectedCountry) {
       this._fuseConfigService.config = { selectedCountry: undefined };
     } else {
       this._fuseConfigService.config = { selectedCountry };

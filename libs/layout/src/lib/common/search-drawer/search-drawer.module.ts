@@ -12,6 +12,7 @@ import { FuseDrawerModule } from '@twentythree/fuse/components/drawer';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
         MatFormFieldModule,
         FuseDrawerModule,
         MatButtonModule,
+        MatSelectModule,
         FormsModule,
         ReactiveFormsModule,
         SearchModule

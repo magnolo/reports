@@ -100,15 +100,50 @@
 
       <!-- Layout -->
       <div class="text-md font-semibold text-secondary">Select Country</div>
-      <div class="flex flex-col mt-6">
+      <div class="flex flex-col mt-3">
         <mat-form-field class="w-full">
-          <mat-label>Search</mat-label>
+          <!-- <mat-label>Search</mat-label> -->
+          <mat-icon
+          class="icon-size-5"
+          matPrefix
+          [svgIcon]="'heroicons_solid:filter'"></mat-icon>
           <input
             id="search"
             matInput
             [(ngModel)]="search">
 
         </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill">
+          <mat-label>Select a country</mat-label>
+          <mat-select [value]="config.selectedCountry" (valueChange)="setCountry($event)">
+
+            <mat-option>None</mat-option>
+            <mat-option
+            *ngFor="let country of countries | search: search"
+              [value]="country.country_code">
+              <div class="flex">
+
+                <div
+                  class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden hover:opacity-80"
+                  [class.border-primary]="config.selectedCountry === country.country_code">
+                  <div
+                    class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
+                    [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div>
+                </div>
+                <div
+                  class="flex flex-1 items-center text-md font-medium text-center text-secondary"
+                  [class.text-on-primary]="config.selectedCountry === country.country_code">
+                  {{ country.country_name}}
+                </div>
+              </div>
+            </mat-option>
+            <mat-option>Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
         <!-- Empty -->
         <div
           class="flex flex-row cursor-pointer filter hover:saturate-100 rounded-md pl-2"

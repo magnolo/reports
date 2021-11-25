@@ -66,8 +66,8 @@
     <div class="flex-auto p-6 py-8 sm:p-10 w-full max-w-screen-xl mx-auto ">
       <div class="flex items-center justify-between w-full ">
         <div>
-          <div class="text-6xl font-bold tracking-tight leading-8 pl-3 capitalize border-l-8 border-solid border-amber-500">News</div>
-          <div class="font-medium tracking-tight text-secondary mt-1">What happened lately!</div>
+          <div class="text-4xl sm:text-6xl font-bold tracking-tight leading-8 pl-3 capitalize border-l-8 border-solid border-amber-500">News</div>
+          <div class="font-medium tracking-tight text-secondary mt-3">What happened lately!</div>
         </div>
 
       </div>
@@ -104,7 +104,7 @@
           [class.md:max-w-80]="idx > 0"
           [class.md:max-w-160]="idx > 0" -->
         <fuse-card
-          class="flex flex-col sm:flex-row md:max-w-160 w-full filter-article bg-transparent rounded-sm shadow-none p-0 m-0 ng-tns-c152-32 ng-star-inserted"
+          class="flex flex-col sm:flex-row md:max-w-160 w-full h-full filter-article bg-transparent rounded-sm shadow-none p-0 m-0 ng-tns-c152-32 ng-star-inserted"
           *ngFor="let item of news | slice: 1; let idx = index">
           <div class="flex-0 w-20 md:w-64">
             <img
@@ -115,7 +115,7 @@
 
           <!-- [class.my-8]="idx === 0" [class.mx-8]="idx > 0" -->
           <!-- mx-8 -->
-          <div class="flex flex-col flex-auto mx-4">
+          <div class="flex flex-col flex-auto mx-0 my-4 sm:mx-4 sm:my-0">
             <div class="text-2xl font-semibold leading-tight">{{ item.name }}</div>
             <div class="text-secondary font-medium text-md mt-1">{{ item.created_at | date }}</div>
             <div class="mt-4 line-clamp-5">{{  item.description }}</div>
@@ -144,9 +144,9 @@
       *ngFor="let category of categories">
       <div class="flex items-center justify-between w-full ">
         <div>
-          <div class="text-6xl font-bold tracking-tight leading-8 pl-3 capitalize border-l-8 border-solid border-primary">{{category.name}}</div>
+          <div class="text-4xl sm:text-6xl font-bold tracking-tight leading-8 pl-3 capitalize border-l-8 border-solid border-primary">{{category.name}}</div>
           <!-- <div class="text-3xl font-semibold tracking-tight leading-8">{{category.name}}</div> -->
-          <div class="font-medium tracking-tight text-secondary mt-1">{{ category.description }}</div>
+          <div class="font-medium tracking-tight text-secondary mt-3">{{ category.description }}</div>
         </div>
 
       </div>
