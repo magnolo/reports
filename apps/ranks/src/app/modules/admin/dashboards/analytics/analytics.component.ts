@@ -21,6 +21,7 @@ import { EPI_DATA, EPI_TREE } from './epi';
 import { Epi } from './epi.class';
 import { CountriesData } from 'countries-map';
 import { COUNTRY_CODES } from './countries';
+import { FuseConfigService } from '@twentythree/fuse/services/config';
 
 @Component({
   selector: 'analytics',
@@ -102,7 +103,8 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     private _router: Router,
     private zone: NgZone,
     private cdr: ChangeDetectorRef,
-    private elem: ElementRef
+    private elem: ElementRef,
+    private configService: FuseConfigService
   ) {
     this.epi = new Epi();
     this.epiTree = this.epi.getTree();
@@ -110,6 +112,29 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     // this.country = this.epiTree.ranks[0];
     // this.currentIndicator = this.epiTree;
     this.updateStates(this.epiTree);
+
+    this.configService.config$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        console.log('config', config);
+        if (config.selectedCountry) {
+          const c = COUNTRY_CODES.find(
+            (codes) =>
+              codes.alpha2Code.toLocaleLowerCase() ===
+              config.selectedCountry.toLowerCase()
+          );
+
+          if (c) {
+            console.log('c', c);
+            this.selectedCountry = {
+              country_name: c.englishShortName,
+              country_code: c.alpha2Code.toLowerCase(),
+            };
+            this.updateStates(this.currentIndicator);
+            this.cdr.detectChanges();
+          }
+        }
+      });
   }
 
   updateStates(node?: any) {
@@ -119,9 +144,11 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
 
     this.currentIndicator = node;
     if (this.selectedCountry) {
-      this.country = node.ranks.find(
+      const c = node.ranks.find(
         (rank: any) => rank.country_code === this.selectedCountry.country_code
       );
+      if(!c) return;
+      this.country = c;
       console.log(this.country, node.ranks);
     } else {
       this.country = node.ranks[0];

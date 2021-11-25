@@ -14,6 +14,7 @@ export interface AppConfig
     layout: Layout;
     scheme: Scheme;
     theme: Theme;
+    selectedCountry?: string
 }
 
 /**
@@ -27,5 +28,6 @@ export interface AppConfig
 export const appConfig: AppConfig = {
     layout: 'empty',
     scheme: 'dark',
-    theme : 'default'
+    theme : 'default',
+    selectedCountry: undefined
 };

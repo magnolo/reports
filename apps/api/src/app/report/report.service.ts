@@ -11,28 +11,28 @@ export class ReportService {
 
   constructor(private httpService: HttpService) {}
 
-  private getCountryDetails(code: string){
-    return this.httpService.get(`${this.countryRestUrl}${code}`)
+  private getCountryDetails(code: string) {
+    return this.httpService.get(`${this.countryRestUrl}${code}`);
   }
 
   getRanks(count = 40, category?: Category): Report[] {
     const reports: Report[] = [];
-    const cat = {...category} || {
+    const cat = { ...category } || {
       slug: 'category-1',
       name: faker.lorem.words(),
       description: faker.lorem.paragraph(),
     };
 
     for (let i = 0; i < count; i++) {
-
-
       const report: Report = {
         slug: `report-${i}`,
         name: faker.commerce.productName(),
         description: faker.lorem.paragraph(),
         category: cat,
         image: {
-          url: `https://source.unsplash.com/random/800x600?sig=${randomNumber(1000)}`,
+          url: `https://source.unsplash.com/random/800x600?sig=${randomNumber(
+            1000
+          )}`,
         },
         type: 'composite',
         score: randomNumber(100),
@@ -43,7 +43,7 @@ export class ReportService {
             trend: randomNumber(20),
             rank: 1,
             country_code: faker.address.countryCode().toLowerCase(),
-            country_name: faker.address.country()
+            country_name: faker.address.country(),
           },
         ],
         indicators_count: randomNumber(40),
@@ -61,11 +61,15 @@ export class ReportService {
 
   getCategories() {
     const categories: Category[] = [];
-
+    const names = [
+      'Sustainability and Resources',
+      'Digitalization, Education & Governance',
+      'Economics & Business',
+    ];
     for (let i = 0; i < 5; i++) {
       const category: Category = {
         slug: `category-${i}`,
-        name: faker.lorem.words(),
+        name: names[i] ? names[i] : faker.lorem.words(),
         description: faker.lorem.paragraph(),
         short: faker.lorem.slug(),
         color: faker.internet.color(),

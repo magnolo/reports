@@ -1,3 +1,4 @@
+import { SearchDrawerModule } from './common/search-drawer/search-drawer.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@twentythree/shared';
 
@@ -41,6 +42,7 @@ const layoutModules = [
     imports     : [
         SharedModule,
         SettingsModule,
+        SearchDrawerModule,
         ...layoutModules
     ],
     exports     : [

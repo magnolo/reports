@@ -100,11 +100,15 @@ export class DataService {
 
   getCategories(): Observable<Category[]> {
     const categories: Category[] = [];
-
+    const names = [
+      'Sustainability and Resources',
+      'Digitalization, Education & Governance',
+      'Economics & Business',
+    ];
     for (let i = 0; i < 3; i++) {
       const category: Category = {
         slug: `category-${i}`,
-        name: faker.lorem.words(),
+        name: names[i] ? names[i] : faker.lorem.words(),
         description: faker.lorem.paragraph(),
         short: faker.lorem.slug(),
         color: faker.internet.color(),
