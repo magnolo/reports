@@ -233,7 +233,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     //       show: false,
     //     },
     //     zoom: {
-    //       enabled: false,
+    //       enabled: true,
     //     },
     //   },
     //   plotOptions: {
@@ -245,7 +245,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     //     },
     //   },
     //   dataLabels: {
-    //     enabled: true,
+    //     enabled: false,
     //     formatter: function (val: any) {
     //       return val + '%';
     //     },
@@ -257,6 +257,9 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     //   },
 
     //   xaxis: {
+    //     lines:{
+    //       show: false,
+    //     },
     //     categories: indicator.ranks.map((rank: any) => rank.rank),
     //     position: 'bottom',
     //     axisBorder: {
@@ -282,6 +285,9 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     //     },
     //   },
     //   yaxis: {
+    //     lines:{
+    //       show: false,
+    //     },
     //     axisBorder: {
     //       show: false,
     //     },
