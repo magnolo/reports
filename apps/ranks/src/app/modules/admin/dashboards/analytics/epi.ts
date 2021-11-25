@@ -28013,92 +28013,110 @@ export const EPI_TREE = {
               name: 'CO2 Emissions (Total)',
               id: 'CDA',
               value: 50,
+              color: '#6AD182'
             },
             {
               name: 'CO2 Emissions (Power)',
               id: 'CHA',
               value: 20,
+              color: '#79D18E'
             },
             {
               name: 'Methane Emissions',
               id: 'FGA',
               value: 20,
+              color: '#8BDF9F'
             },
             {
               name: 'N2O Emissions',
               value: 5,
               id: 'NDA',
+              color: '#9AEDAD'
             },
             {
               name: 'Black Carbon Emissions',
               id: 'BCA',
               value: 5,
+              color: '#AAF3BB'
             },
           ],
         },
         {
           name: 'Biodiversity & Habitat',
           id: 'BDH',
+          color: '#68D6AF',
           // value: 25,
           children: [
             {
               name: 'Marine Protected Areas',
               id: 'MPA',
+              color: '#68D6AF',
               value: 20,
             },
             {
               name: 'Biome Protection (Global)',
               value: 20,
               id: 'TBG',
+              color: '#67E0BF'
             },
             {
               name: 'Biome Protection (National)',
               id: 'TBN',
               value: 20,
+              color: '#70E9D0'
             },
             {
               name: 'Species Protection Index ',
               id: 'SPI',
               value: 20,
+              color: '#82EDDE'
             },
             {
               name: 'Representativeness Index',
               id: 'SHI',
               value: 10,
+              color: '#B4FDEF'
+
             },
             {
               name: 'Species Habitat Index',
               id: 'BHV',
               value: 10,
+              color:'#C0F8EE'
             },
           ],
         },
         {
           name: 'Forests',
           id: 'ECS',
+          color: '#3D9BCF',
           // value: 10,
           children: [
             {
               name: 'Tree Cover Loss',
               id: 'TCL',
               value: 100,
+              color: '#3D9BCF'
             },
           ],
         },
         {
           name: 'Fisheries',
           id: 'FSH',
+          color: '#429090',
           // value: 10,
           children: [
             {
               name: 'Fish Stock Status',
               id: 'FSS',
+              color: '#429090',
               value: 50,
             },
             {
               name: 'Regional Marine Trophic Index',
               value: 50,
-              id: 'RMS'
+              id: 'RMS',
+              color: '#4CC0C0'
             },
           ],
         },
@@ -28106,16 +28124,19 @@ export const EPI_TREE = {
           name: 'Air Pollution',
           id: 'APE',
           // value: 10,
+          color: '#2778C8',
           children: [
             {
               name: 'S2O Emissions (50%)',
               id: 'SDA',
               value: 50,
+              color: '#3586D4'
             },
             {
               name: 'NOX Emissions (50%)',
               id: 'NXA',
               value: 50,
+              color: '#4394E2'
             },
           ],
         },
@@ -28123,23 +28144,27 @@ export const EPI_TREE = {
           name: 'Water resources',
           id:'WRS',
           // value: 25,
+          color: '#7D89F5',
           children: [
             {
               name: 'Wastewater treatment',
               value: 100,
-              id: 'WWT'
+              id: 'WWT',
+              color: '#96A2F8'
             },
           ],
         },
         {
           name: 'Agriculture',
           // value: 10,
+          color: '#1E6FBE',
           id: 'AGR',
           children: [
             {
               name: 'Sustainable Nitrogen management',
               value: 100,
-              id: 'SNM'
+              id: 'SNM',
+              color: '#1E6FBE'
             },
           ],
         },

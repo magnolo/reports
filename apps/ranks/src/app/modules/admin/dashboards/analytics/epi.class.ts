@@ -22,7 +22,7 @@ export class Epi {
           ?.alpha2Code,
         score: item[scoreField],
         rank: item[rankField],
-        change: item[changeField],
+        trend: item[changeField],
       }))
       .sort((a, b) => a.rank - b.rank);
   }

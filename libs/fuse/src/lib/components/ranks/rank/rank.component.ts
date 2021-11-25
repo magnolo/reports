@@ -7,6 +7,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class RankComponent {
 
+  get countryCode(){
+    return this.item?.country_code.toLowerCase();
+  }
+
   @Input('rank') item: any;
 
 

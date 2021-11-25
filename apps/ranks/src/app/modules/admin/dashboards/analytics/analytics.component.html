@@ -33,7 +33,7 @@
         #sunburst
         class="w-1/2 flex items-center sun"></div>
       <div class="w-1/2 flex flex-col items-center justify-center">
-        <div class="text-2xl font-semibold mb-8">EPI - Main Score</div>
+        <div class="text-2xl font-semibold mb-8">EPI - {{ currentIndicator.name }}</div>
         <country-rank
           [rank]="country"
           class="w-full"></country-rank>
@@ -98,7 +98,7 @@
         </div>
         <div class="flex flex-col justify-center pr-6 text-right">
           <div class="text-sm opacity-70 mb-1">Trend</div>
-          <div class="font-medium text-xl  leading-none ">{{ item.ranks[0].change }}</div>
+          <div class="font-medium text-xl  leading-none ">{{ item.ranks[0].trend }}</div>
         </div>
       </div>
 

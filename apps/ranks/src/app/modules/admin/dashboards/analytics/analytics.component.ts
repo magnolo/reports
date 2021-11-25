@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   NgZone,
@@ -39,10 +40,17 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
             .classes([1000, 4000, 8000, 12000, 16540]);
 
           this.sunburstChart
-            // .onClick((node) => {
-            //   console.log('CLICKEd', node);
-            //   return true
-            // })
+            .onClick((node: any) => {
+              console.log(this.deepFind(node.id));
+
+              this.sunburstChart.focusOnNode(node);
+
+              this.currentIndicator = node;
+              this.country = node.ranks[0];
+              this.cdr.detectChanges();
+
+              return true;
+            })
             // .strokeColor('transparent')
             .minSliceAngle(0)
             .labelOrientation('angular')
@@ -51,10 +59,11 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
             .color((node: any) => {
               return node.color || '#ccc';
             })
-            .tooltipContent((fn: any) => {
-              console.log(fn);
-              return '<h2>' + fn.value + '%</h2>';
+            .tooltipContent((node: any) => {
+              const rank: any = node.ranks[0];
+              return `${rank.country_name}: ${rank.score}`;
             })
+            .label((node: any) => node.short)
             .centerRadius(0.5)
             .width(450)
             .height(450)
@@ -92,6 +101,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   indCountriedData?: CountriesData;
   active?: string;
   chartData?: any;
+  currentIndicator!: any;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -101,12 +111,37 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
   constructor(
     private _analyticsService: AnalyticsService,
     private _router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {
     this.epi = new Epi();
     this.epiTree = this.epi.getTree();
     this.generateCountriesData();
-    console.log(this.epiTree);
+    this.country = this.epiTree.ranks[0];
+    this.currentIndicator = this.epiTree;
+  }
+
+  deepFind(id: string) {
+    if (this.epiTree.id === id) {
+      return this.epiTree;
+    }
+
+    return this.find(this.epiTree.children, 'id', id);
+  }
+  find(collection: any, key: string, value: any) {
+    for (const o of collection) {
+      for (const [k, v] of Object.entries(o)) {
+        if (k === key && v === value) {
+          return o;
+        }
+        if (Array.isArray(v)) {
+          const _o: any = this.find(v, key, value);
+          if (_o) {
+            return _o;
+          }
+        }
+      }
+    }
   }
 
   generateCountriesData() {
@@ -216,7 +251,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
           },
         },
       },
-    }
+    };
   }
 
   // -----------------------------------------------------------------------------------------------------
@@ -334,7 +369,6 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
    */
   private _prepareChartData(): void {
     // Visitors
-
 
     // {
     //   chart: {
