@@ -946,4 +946,17 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
       },
     };
   }
+
+  currentRank(ranks: any) {
+    if (!this.selectedCountry || !this.selectedCountry.country_code) {
+      return ranks[0];
+    }
+
+    const c = ranks.find(
+      (rank: any) => rank.country_code === this.selectedCountry.country_code
+    );
+    if (!c) return ranks[0];
+
+    return c;
+  }
 }

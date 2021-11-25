@@ -112,19 +112,19 @@
         </div>
         <div class="flex flex-col justify-center pr-6">
           <div class="text-sm opacity-70 mb-1">Country</div>
-          <div class="font-medium text-xl   leading-none">{{item.ranks[0].country_name }}</div>
+          <div class="font-medium text-xl   leading-none">{{currentRank(item.ranks).country_name }}</div>
         </div>
         <div class="flex flex-col justify-center pr-6 text-center">
           <div class="text-sm opacity-70 mb-1">Rank</div>
-          <div class="font-medium text-xl  leading-none ">{{ item.ranks[0].rank }}</div>
+          <div class="font-medium text-xl  leading-none ">{{ currentRank(item.ranks).rank }}</div>
         </div>
         <div class="flex flex-col justify-center pr-6 text-right">
           <div class="text-sm opacity-70 mb-1">Score</div>
-          <div class="font-medium text-xl   leading-none">{{ item.ranks[0].score }}</div>
+          <div class="font-medium text-xl   leading-none">{{ currentRank(item.ranks).score }}</div>
         </div>
         <div class="flex flex-col justify-center pr-6 text-right">
           <div class="text-sm opacity-70 mb-1">Trend</div>
-          <div class="font-medium text-xl  leading-none ">{{ item.ranks[0].trend }}</div>
+          <div class="font-medium text-xl  leading-none ">{{ currentRank(item.ranks).trend }}</div>
         </div>
       </div>
 
