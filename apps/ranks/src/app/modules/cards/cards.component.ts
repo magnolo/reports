@@ -1,3 +1,4 @@
+import { FuseConfigService } from './../../../../../../libs/fuse/src/lib/services/config/config.service';
 import { DataService } from './../../mock-api/data/data.service';
 import {
   AfterViewInit,
@@ -12,7 +13,7 @@ import {
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FuseCardComponent } from '@twentythree/fuse/components/card';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Category, News } from '@twentythree/api-interfaces';
 import * as chroma from 'chroma-js';
 
@@ -84,6 +85,8 @@ export class CardsComponent implements AfterViewInit {
     }
 };
 
+
+private _unsubscribeAll: Subject<any> = new Subject<any>();
   /**
    * Constructor
    */
@@ -91,7 +94,8 @@ export class CardsComponent implements AfterViewInit {
     private _renderer2: Renderer2,
     private _router: Router,
     private _activatedRoute: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private configService: FuseConfigService
   ) {}
 
   // -----------------------------------------------------------------------------------------------------
@@ -126,6 +130,16 @@ export class CardsComponent implements AfterViewInit {
             }
         };
 
+
+
+
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
   }
 
   /**

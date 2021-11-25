@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -133,6 +134,13 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
             this.updateStates(this.currentIndicator);
             this.cdr.detectChanges();
           }
+        } else {
+          this.selectedCountry = undefined;
+          this.updateStates(this.currentIndicator);
+          this.zone.onStable.pipe(take(1)).subscribe(() => {
+            this.cdr.detectChanges();
+          });
+          //
         }
       });
   }
@@ -147,7 +155,7 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
       const c = node.ranks.find(
         (rank: any) => rank.country_code === this.selectedCountry.country_code
       );
-      if(!c) return;
+      if (!c) return;
       this.country = c;
       console.log(this.country, node.ranks);
     } else {

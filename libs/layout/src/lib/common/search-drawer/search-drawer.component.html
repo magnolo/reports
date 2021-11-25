@@ -1,12 +1,19 @@
 <!-- [class.lg:right-16]="config.layout !== 'centered' && config.layout !== 'material'" -->
 <div
-  class="fixed flex items-center justify-center left-0 w-10 h-10 shadow-lg rounded-r-lg z-90 cursor-pointer bg-primary-600 bg-opacity-90 print:hidden"
+  class="fixed flex items-center justify-center left-0 w-10 h-10 shadow-lg rounded-r-sm z-90 cursor-pointer bg-primary-600 bg-opacity-90 print:hidden"
   [class.lg:left-0]="config.layout === 'centered' || config.layout === 'material'"
   style="top: 275px"
   (click)="searchDrawer.toggle()">
   <mat-icon
     class="icon-size-5 text-white "
     [svgIcon]="'heroicons_solid:document-report'"></mat-icon>
+
+  <div
+    class="absolute h-5 w-8 overflow-hidden rounded-sm bg-cover shadow-lg bg-center bg-no-repeat -top-3 -right-4"
+    [style.backgroundImage]="'url(assets/images/countries/flags/'+config.selectedCountry+'.svg)'"
+    *ngIf="config.selectedCountry">
+
+  </div>
 </div>
 
 <fuse-drawer
