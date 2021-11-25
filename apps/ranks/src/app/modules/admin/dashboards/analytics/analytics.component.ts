@@ -44,9 +44,9 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
               console.log(this.deepFind(node.id));
 
               this.sunburstChart.focusOnNode(node);
-
               this.currentIndicator = node;
               this.country = node.ranks[0];
+              this.generateCountriesData(node.ranks)
               this.cdr.detectChanges();
 
               return true;
@@ -144,9 +144,10 @@ export class AnalyticsComponent implements OnInit, OnDestroy {
     }
   }
 
-  generateCountriesData() {
-    this.countriesData = this.epiTree.ranks.reduce((result: any, item: any) => {
-      result[item.country_code] = { value: item.score };
+  generateCountriesData(ranks?: any) {
+    const r = ranks || this.epiTree.ranks;
+    this.countriesData = r.reduce((result: any, item: any) => {
+      result[item.country_code] = { ...item, value: item.score };
       return result;
     }, {});
     console.log(this.countriesData);

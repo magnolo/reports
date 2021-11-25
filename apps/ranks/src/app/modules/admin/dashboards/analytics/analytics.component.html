@@ -28,7 +28,7 @@
 
   <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-6 md:p-8">
 
-    <div class="w-full flex items-center justify-center my-8">
+    <div class="w-full flex items-center justify-center mb-8">
       <div
         #sunburst
         class="w-1/2 flex items-center sun"></div>
@@ -47,9 +47,10 @@
       *ngIf="countriesData">
       <countries-map
         [showCaption]="false"
-        minColor="#F59E0B"
-        maxColor="#4F46E5"
+        minColor="#ccc"
+        [maxColor]="currentIndicator?.color || '#4F46E5'"
         [data]="countriesData"
+        (chartSelect)="selectCountry($event)"
         backgroundColor="transparent"></countries-map>
     </div>
 
@@ -63,7 +64,6 @@
       let-lvl="lvl">
       <div
         class="bg-card rounded-sm overflow-hidden h-22 mt-2 grid hover:bg-primary hover:text-on-primary"
-
         [class.bg-primary]="active === item.id"
         [class.text-on-primary]="active === item.id"
         style="grid-template-columns: 64px 1fr 1fr 64px 64px 64px;"
@@ -114,7 +114,7 @@
           [data]="indCountriedData"
           backgroundColor="transparent"></countries-map>
 
-          <!-- <div class="flex flex-col flex-auto h-80">
+        <!-- <div class="flex flex-col flex-auto h-80">
             <apx-chart
               *ngIf="chartData"
               class="flex-auto w-full h-full"
