@@ -5,6 +5,11 @@ import { Layout } from '@twentythree/layout/layout.types';
 export type Scheme = 'auto' | 'dark' | 'light';
 export type Theme = 'default' | string;
 
+export interface Filter {
+  type: 'top' | 'quantile';
+  value: number;
+}
+
 /**
  * AppConfig interface. Update this interface to strictly type your config
  * object.
@@ -15,6 +20,7 @@ export interface AppConfig
     scheme: Scheme;
     theme: Theme;
     selectedCountry?: string
+    filters: Filter[]
 }
 
 /**
@@ -29,5 +35,6 @@ export const appConfig: AppConfig = {
     layout: 'empty',
     scheme: 'dark',
     theme : 'default',
-    selectedCountry: undefined
+    selectedCountry: undefined,
+    filters: []
 };

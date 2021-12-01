@@ -31,12 +31,10 @@ export class FuseConfigService
         // Merge the new config over to the current config
         const config = merge({}, this._config.getValue(), value);
 
-        console.log('NWE', config, value);
+
         if(value && typeof value === 'object' && Object.keys(value).includes('selectedCountry') && !value.selectedCountry){
           config.selectedCountry = undefined
         }
-
-        console.log('NWE', config, value);
 
         // Execute the observable
         this._config.next(config);

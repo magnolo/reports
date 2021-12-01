@@ -22,6 +22,7 @@
   [mode]="'over'"
   [name]="'searchDrawer'"
   [position]="'left'"
+  [transparentOverlay]="true"
   #searchDrawer>
 
   <div class="flex flex-col w-full overflow-auto bg-card">
@@ -40,7 +41,9 @@
       </button>
     </div>
 
-    <div class="flex flex-col p-6 overflow-y-auto" style="max-height: 400px">
+    <div
+      class="flex flex-col p-6 overflow-y-auto"
+      style="max-height: 400px">
 
       <!-- Scheme -->
       <!-- <div class="text-md font-semibold text-secondary">SCHEME</div>
@@ -104,9 +107,9 @@
         <mat-form-field class="w-full">
           <!-- <mat-label>Search</mat-label> -->
           <mat-icon
-          class="icon-size-5"
-          matPrefix
-          [svgIcon]="'heroicons_solid:filter'"></mat-icon>
+            class="icon-size-5"
+            matPrefix
+            [svgIcon]="'heroicons_solid:filter'"></mat-icon>
           <input
             id="search"
             matInput
@@ -167,7 +170,94 @@
       </div>
 
     </div>
+    <div
+      class="flex flex-col p-6 overflow-y-auto"
+      style="max-height: 400px">
 
+      <!-- Scheme -->
+      <!-- <div class="text-md font-semibold text-secondary">SCHEME</div>
+            <div class="grid grid-cols-3 gap-3 justify-items-start mt-6">
+
+                <div
+                    class="flex items-center py-3 pl-5 pr-6 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
+                    [class.ring-2]="config.scheme === 'auto'"
+                    matTooltip="Automatically sets the scheme based on user's operating system's color scheme preference using 'prefer-color-scheme' media query."
+                    (click)="setScheme('auto')">
+                    <div class="flex items-center rounded-full overflow-hidden">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:lightning-bolt'"></mat-icon>
+                    </div>
+                    <div
+                        class="flex items-center ml-2 font-medium leading-5"
+                        [class.text-secondary]="config.scheme !== 'auto'">
+                        Auto
+                    </div>
+                </div>
+
+                <div
+                    class="flex items-center py-3 pl-5 pr-6 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
+                    [class.ring-2]="config.scheme === 'dark'"
+                    (click)="setScheme('dark')">
+                    <div class="flex items-center rounded-full overflow-hidden">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:moon'"></mat-icon>
+                    </div>
+                    <div
+                        class="flex items-center ml-2 font-medium leading-5"
+                        [class.text-secondary]="config.scheme !== 'dark'">
+                        Dark
+                    </div>
+                </div>
+
+                <div
+                    class="flex items-center py-3 pl-5 pr-6 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
+                    [class.ring-2]="config.scheme === 'light'"
+                    (click)="setScheme('light')">
+                    <div class="flex items-center rounded-full overflow-hidden">
+                        <mat-icon
+                            class="icon-size-5"
+                            [svgIcon]="'heroicons_solid:sun'"></mat-icon>
+                    </div>
+                    <div
+                        class="flex items-center ml-2 font-medium leading-5"
+                        [class.text-secondary]="config.scheme !== 'light'">
+                        Light
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-8"> -->
+
+      <!-- Layout -->
+      <div class="text-md font-semibold text-secondary">Filters</div>
+      <div class="flex flex-col mt-3">
+        <div
+          class
+          (click)="addFilter()">
+          Add Filter
+        </div>
+        <div
+          class="flex"
+          *ngFor="let filter of config.filters;trackBy: trackByFilter; ;let idx = index">
+          {{ filter.type }} |
+          <mat-form-field class="flex-1">
+            <input
+              matInput
+              type="number"
+              [ngModel]="filter.value"
+              (ngModelChange)="updateFilterValue(idx, $event)">
+          </mat-form-field>
+          <div
+            (click)="removeFilter(idx)"
+            class>
+            X
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
 </fuse-drawer>

@@ -1,19 +1,3 @@
-export interface Message {
-  message: string;
-}
-
-export interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
-  description?: string;
-  price?: number;
-  quantity?: number;
-  inventoryStatus?: string;
-  category?: string;
-  image?: string;
-  rating?: number;
-}
 
 export interface Tags {
   slug: string;
@@ -28,10 +12,12 @@ export interface Rank {
   rank: number;
   trend: number;
 }
+
 export interface Report {
   slug: string;
   name: string;
   description: string;
+  short?: string;
   category: {
     slug: string;
     name: string;
@@ -40,16 +26,15 @@ export interface Report {
   image: {
     url: string;
   };
-  type: 'group' | 'composite';
-  score: number;
-  trend: number;
+  value?: number;
+  type: 'group' | 'composite' | 'indicator';
   ranks: Rank[];
-  tags?: Tags[];
   indicators_count: number;
   indicators?: {
     slug: string;
     name: string;
   }[];
+  children?: Report[]
 }
 
 export interface Indicator {

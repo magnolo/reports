@@ -1,4 +1,5 @@
-import { COUNTRY_CODES } from './../../../../../../apps/ranks/src/app/modules/admin/dashboards/analytics/countries';
+import { COUNTRY_CODES } from './../../../../../../apps/ranks/src/app/mock-api/data/countries';
+
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -7,7 +8,7 @@ import { FuseConfigService } from '@twentythree/fuse/services/config';
 import { FuseTailwindService } from '@twentythree/fuse/services/tailwind';
 
 import { Layout } from '@twentythree/layout/layout.types';
-import { AppConfig, Scheme, Theme } from '@twentythree/core/config/app.config';
+import { AppConfig, Filter, Scheme, Theme } from '@twentythree/core/config/app.config';
 
 @Component({
   selector: 'search-drawer',
@@ -120,5 +121,29 @@ export class SearchDrawerComponent implements OnInit, OnDestroy {
     } else {
       this._fuseConfigService.config = { selectedCountry };
     }
+  }
+
+  addFilter() {
+    this._fuseConfigService.config = {
+      filters: [...this.config.filters, { type: 'top', value: 5 }],
+    };
+  }
+
+  removeFilter(idx: number) {
+    this.config.filters.splice(idx, 1);
+    this._fuseConfigService.config = {
+      filters: [...this.config.filters],
+    };
+  }
+
+  updateFilterValue(idx: number, value: number){
+    this.config.filters[idx].value = value;
+    this._fuseConfigService.config = {
+      filters: [...this.config.filters],
+    };
+  }
+
+  trackByFilter = (index: number, item: Filter) => {
+    return item.type;
   }
 }
