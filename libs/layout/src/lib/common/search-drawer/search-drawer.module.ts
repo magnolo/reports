@@ -18,7 +18,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import { CountryFilterComponent } from './components/country-filter/country-filter.component';
 import { RangeFiltersComponent } from './components/range-filters/range-filters.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 @NgModule({
     declarations: [
         SearchDrawerComponent,
@@ -39,6 +39,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         MatSelectModule,
         MatSlideToggleModule,
         MatSliderModule,
+        MatButtonToggleModule,
         FormsModule,
         ReactiveFormsModule,
         SearchModule,

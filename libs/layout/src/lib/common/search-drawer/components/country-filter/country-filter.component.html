@@ -4,7 +4,9 @@
     (click)="selectOpened(true); select.open()"
     class="fuse-vertical-navigation-item-icon stay flex flex-col h-12 items-center justify-center rounded-md overflow-hidden"
     [class.border-primary]>
+    <mat-icon [svgIcon]="'heroicons_outline:globe'" *ngIf="!selectedCountry"></mat-icon>
     <div
+      *ngIf="selectedCountry"
       class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
       [style.backgroundImage]="'url(assets/images/countries/flags/'+selectedCountry+'.svg)'"></div>
   </div>
