@@ -1,0 +1,119 @@
+<!-- <mat-form-field appearance="fill"> -->
+<div class="flex w-full justify-center">
+  <div
+    (click)="selectOpened(true); select.open()"
+    class="fuse-vertical-navigation-item-icon stay flex flex-col h-12 items-center justify-center rounded-md overflow-hidden"
+    [class.border-primary]>
+    <div
+      class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
+      [style.backgroundImage]="'url(assets/images/countries/flags/'+selectedCountry+'.svg)'"></div>
+  </div>
+  <!-- [class.text-on-primary]="selectedCountry === country.country_code" -->
+  <div style="max-width: calc(100% - 52px)" class="fuse-vertical-navigation-item-title-wrapper flex flex-1 items-center text-md font-medium text-center text-secondary">
+
+    <div class="fuse-vertical-navigation-item-title w-full">
+      <mat-select
+        #select
+        (click)="selectOpened(true)"
+        (openedChange)="selectOpened($event)"
+        class="flex flex-1"
+        [value]="selectedCountry"
+        (valueChange)="setCountry($event)">
+        <mat-option>
+          <ngx-mat-select-search [(ngModel)]="search" [formControl]="bankFilterCtrl"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option
+          *ngFor="let country of countries | search: search"
+          [value]="country.country_code">
+          <div class="flex">
+
+            <div
+              class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden"
+              [class.border-primary]="selectedCountry === country.country_code">
+              <div
+                class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
+                [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div>
+            </div>
+            <div
+              class="flex flex-1 items-center text-md font-medium text-center text-secondary"
+              [class.text-on-primary]="selectedCountry === country.country_code">
+              {{ country.country_name}}
+            </div>
+          </div>
+        </mat-option>
+
+      </mat-select>
+    </div>
+
+  </div>
+
+</div>
+<!-- </mat-form-field> -->
+
+<!-- <mat-form-field class="w-full">
+  <!-- <mat-label>Search</mat-label>
+  <mat-icon
+    class="icon-size-5"
+    matPrefix
+    [svgIcon]="'heroicons_solid:filter'"></mat-icon>
+  <input
+    id="search"
+    matInput
+    [(ngModel)]="search">
+
+</mat-form-field> -->
+
+<!-- <mat-form-field appearance="fill">
+  <mat-label>Select a country</mat-label>
+  <mat-select [value]="config.selectedCountry" (valueChange)="setCountry($event)">
+
+    <mat-option>None</mat-option>
+    <mat-option
+    *ngFor="let country of countries | search: search"
+      [value]="country.country_code">
+      <div class="flex">
+
+        <div
+          class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden hover:opacity-80"
+          [class.border-primary]="config.selectedCountry === country.country_code">
+          <div
+            class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
+            [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div>
+        </div>
+        <div
+          class="flex flex-1 items-center text-md font-medium text-center text-secondary"
+          [class.text-on-primary]="config.selectedCountry === country.country_code">
+          {{ country.country_name}}
+        </div>
+      </div>
+    </mat-option>
+    <mat-option>Option 1</mat-option>
+    <mat-option value="option2">Option 2</mat-option>
+    <mat-option value="option3">Option 3</mat-option>
+  </mat-select>
+</mat-form-field> -->
+
+<!-- Empty -->
+<!-- <div
+  class="flex flex-row cursor-pointer filter hover:saturate-100 rounded-md pl-2"
+  [class.saturate-0]="selectedCountry !== country.country_code"
+  [class.bg-primary]="selectedCountry === country.country_code"
+  *ngFor="let country of countries | search: search"
+  (click)="setCountry(country.country_code)">
+  <div
+    class="fuse-vertical-navigation-item-icon flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden hover:opacity-80"
+    [class.border-primary]="selectedCountry === country.country_code">
+    <div
+      class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
+      [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div>
+  </div>
+  <div
+    class="fuse-vertical-navigation-item-title-wrapper flex flex-1 items-center text-md font-medium text-center text-secondary"
+    [class.text-on-primary]="selectedCountry === country.country_code">
+
+    <div class="fuse-vertical-navigation-item-title">
+      <span >{{country.country_name}}</span>
+    </div>
+
+  </div>
+</div> -->

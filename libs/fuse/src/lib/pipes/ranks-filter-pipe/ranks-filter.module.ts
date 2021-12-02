@@ -1,3 +1,4 @@
+import { RanksCountryPipe } from './ranks-country.pipe';
 import { RanksCountPipe } from './ranks-count.pipe';
 import { RanksFilterPipe } from './ranks-filter.pipe';
 import { NgModule } from '@angular/core';
@@ -6,11 +7,13 @@ import { NgModule } from '@angular/core';
 @NgModule({
     declarations: [
         RanksFilterPipe,
-        RanksCountPipe
+        RanksCountPipe,
+        RanksCountryPipe
     ],
     exports     : [
       RanksFilterPipe,
-      RanksCountPipe
+      RanksCountPipe,
+      RanksCountryPipe
     ]
 })
 export class RanksFilterPipeModule

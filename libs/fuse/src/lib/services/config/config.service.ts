@@ -36,6 +36,7 @@ export class FuseConfigService
           config.selectedCountry = undefined
         }
 
+        console.log('SET GET config', config, value)
         // Execute the observable
         this._config.next(config);
     }

@@ -36,11 +36,11 @@
           mat-flat-button
           [color]="'primary'"
           [routerLink]="['/report', item.slug ]">
-          <ng-container *ngIf="filters && filters.length > 0; else fullIndicatorsTemplate">
-            {{ item.indicators_count }} indicators match
+          <ng-container *ngIf="filters && filters.length > 0 && selectedCountry ; else fullIndicatorsTemplate">
+            {{ item | ranksCount: selectedCountry: filters }} indicators match
           </ng-container>
           <ng-template #fullIndicatorsTemplate>
-            {{ item | ranksCount: selectedCountry: filters }} sub indicators
+            {{ item.indicators_count }} sub indicators
           </ng-template>
 
         </button>

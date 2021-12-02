@@ -1,3 +1,4 @@
+import { SearchDrawerModule } from './../../../common/search-drawer/search-drawer.module';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -39,7 +40,8 @@ import { DenseLayoutComponent } from '@twentythree/layout/layouts/vertical/dense
         SearchModule,
         ShortcutsModule,
         UserModule,
-        SharedModule
+        SharedModule,
+        SearchDrawerModule
     ],
     exports     : [
         DenseLayoutComponent

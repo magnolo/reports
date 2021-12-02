@@ -39,6 +39,7 @@
     "mathjs": "^10.0.0",
     "moment": "^2.29.1",
     "ng-apexcharts": "^1.5.12",
+    "ngx-mat-select-search": "^3.3.3",
     "perfect-scrollbar": "^1.5.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "7.4.0",

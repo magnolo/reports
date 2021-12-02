@@ -32,7 +32,7 @@ export interface AppConfig
  * FuseConfigService and its methods.
  */
 export const appConfig: AppConfig = {
-    layout: 'empty',
+    layout: 'dense',
     scheme: 'dark',
     theme : 'default',
     selectedCountry: undefined,

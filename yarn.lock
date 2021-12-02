@@ -7373,6 +7373,13 @@ ng-apexcharts@^1.5.12:
   dependencies:
     tslib "^1.10.0"
 
+ngx-mat-select-search@^3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/ngx-mat-select-search/-/ngx-mat-select-search-3.3.3.tgz#b867e2c8add58a3bc99f2b1634bd7fd25af0a834"
+  integrity sha512-donT6I/5HSikZD62n4R4yhGKCkGBmRC/GMS5YT5hW8BzBRxtfUs3ihcEMSNPhO44sj0Q3MxibunBjQVWeF6pgQ==
+  dependencies:
+    tslib "^1.9.0"
+
 nice-napi@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/nice-napi/-/nice-napi-1.0.2.tgz#dc0ab5a1eac20ce548802fc5686eaa6bc654927b"

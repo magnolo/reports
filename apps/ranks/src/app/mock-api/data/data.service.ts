@@ -5,9 +5,10 @@ import { Category, News, Rank, Report } from '@twentythree/api-interfaces';
 import * as faker from 'faker';
 import { COUNTRY_CODES } from './countries';
 
-const randomNumber = (max: number) => Math.floor(Math.random() * max);
-const randomNumberComma = (max: number) => +(Math.random() * max).toFixed(1);
-const randomNumberBetween = (min: number, max: number) => {
+export const randomNumber = (max: number) => Math.floor(Math.random() * max);
+export const randomNumberComma = (max: number) =>
+  +(Math.random() * max).toFixed(1);
+export const randomNumberBetween = (min: number, max: number) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
@@ -73,7 +74,12 @@ export class DataService {
     return of(news);
   }
 
-  getReports(count = 40, category?: Category, lvl: number = 0): Report[] {
+  getReports(
+    count = 40,
+    category?: Category,
+    lvl: number = 0,
+    countryCodes: string[] = []
+  ): Report[] {
     const reports: Report[] = [];
     const cat = category
       ? category
@@ -83,11 +89,37 @@ export class DataService {
           description: faker.lorem.paragraph(),
         };
 
-    const countries = COUNTRY_CODES;
+    let countries = COUNTRY_CODES.filter((item) =>
+      countryCodes.length > 0 ? countryCodes.includes(item.alpha2Code) : true
+    );
 
     for (let i = 0; i < count; i++) {
       const name = faker.commerce.productName();
       const slug = `report-${faker.lorem.slug()}`;
+
+      if (countryCodes.length === 0 && lvl === 0) {
+        const random = randomNumberBetween(
+          COUNTRY_CODES.length / 2,
+          COUNTRY_CODES.length
+        );
+
+        countryCodes = this._getShuffledArr(COUNTRY_CODES)
+          .slice(0, random)
+          .map((item) => item.alpha2Code);
+
+        countries = COUNTRY_CODES.filter((item) =>
+          countryCodes.length > 0
+            ? countryCodes.includes(item.alpha2Code)
+            : true
+        );
+        console.log('[Report]', { name, slug });
+        console.log(
+          'exludes',
+          COUNTRY_CODES.filter(
+            (item) => !countryCodes.includes(item.alpha2Code)
+          ).map((item) => item.alpha2Code)
+        );
+      }
 
       const data: Rank[] = countries
         .map((country) => ({
@@ -116,7 +148,12 @@ export class DataService {
         indicators_count: randomNumber(40),
         children:
           lvl < 3
-            ? this.getReports(randomNumberBetween(2, 5), undefined, lvl + 1)
+            ? this.getReports(
+                randomNumberBetween(2, 5),
+                undefined,
+                lvl + 1,
+                countryCodes
+              )
             : [],
       };
 
@@ -175,5 +212,14 @@ export class DataService {
     }
     this._categories = categories;
     return of(categories);
+  }
+
+  _getShuffledArr(arr: any[]): any[] {
+    const newArr = arr.slice();
+    for (let i = newArr.length - 1; i > 0; i--) {
+      const rand = Math.floor(Math.random() * (i + 1));
+      [newArr[i], newArr[rand]] = [newArr[rand], newArr[i]];
+    }
+    return newArr;
   }
 }

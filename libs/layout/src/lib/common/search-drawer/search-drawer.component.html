@@ -45,128 +45,11 @@
       class="flex flex-col p-6 overflow-y-auto"
       style="max-height: 400px">
 
-      <!-- Scheme -->
-      <!-- <div class="text-md font-semibold text-secondary">SCHEME</div>
-            <div class="grid grid-cols-3 gap-3 justify-items-start mt-6">
-
-                <div
-                    class="flex items-center py-3 pl-5 pr-6 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
-                    [class.ring-2]="config.scheme === 'auto'"
-                    matTooltip="Automatically sets the scheme based on user's operating system's color scheme preference using 'prefer-color-scheme' media query."
-                    (click)="setScheme('auto')">
-                    <div class="flex items-center rounded-full overflow-hidden">
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:lightning-bolt'"></mat-icon>
-                    </div>
-                    <div
-                        class="flex items-center ml-2 font-medium leading-5"
-                        [class.text-secondary]="config.scheme !== 'auto'">
-                        Auto
-                    </div>
-                </div>
-
-                <div
-                    class="flex items-center py-3 pl-5 pr-6 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
-                    [class.ring-2]="config.scheme === 'dark'"
-                    (click)="setScheme('dark')">
-                    <div class="flex items-center rounded-full overflow-hidden">
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:moon'"></mat-icon>
-                    </div>
-                    <div
-                        class="flex items-center ml-2 font-medium leading-5"
-                        [class.text-secondary]="config.scheme !== 'dark'">
-                        Dark
-                    </div>
-                </div>
-
-                <div
-                    class="flex items-center py-3 pl-5 pr-6 rounded-full cursor-pointer ring-inset ring-primary bg-hover"
-                    [class.ring-2]="config.scheme === 'light'"
-                    (click)="setScheme('light')">
-                    <div class="flex items-center rounded-full overflow-hidden">
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_solid:sun'"></mat-icon>
-                    </div>
-                    <div
-                        class="flex items-center ml-2 font-medium leading-5"
-                        [class.text-secondary]="config.scheme !== 'light'">
-                        Light
-                    </div>
-                </div>
-            </div>
-
-            <hr class="my-8"> -->
-
       <!-- Layout -->
       <div class="text-md font-semibold text-secondary">Select Country</div>
       <div class="flex flex-col mt-3">
-        <mat-form-field class="w-full">
-          <!-- <mat-label>Search</mat-label> -->
-          <mat-icon
-            class="icon-size-5"
-            matPrefix
-            [svgIcon]="'heroicons_solid:filter'"></mat-icon>
-          <input
-            id="search"
-            matInput
-            [(ngModel)]="search">
+       <country-filter></country-filter>
 
-        </mat-form-field>
-
-        <!-- <mat-form-field appearance="fill">
-          <mat-label>Select a country</mat-label>
-          <mat-select [value]="config.selectedCountry" (valueChange)="setCountry($event)">
-
-            <mat-option>None</mat-option>
-            <mat-option
-            *ngFor="let country of countries | search: search"
-              [value]="country.country_code">
-              <div class="flex">
-
-                <div
-                  class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden hover:opacity-80"
-                  [class.border-primary]="config.selectedCountry === country.country_code">
-                  <div
-                    class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
-                    [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div>
-                </div>
-                <div
-                  class="flex flex-1 items-center text-md font-medium text-center text-secondary"
-                  [class.text-on-primary]="config.selectedCountry === country.country_code">
-                  {{ country.country_name}}
-                </div>
-              </div>
-            </mat-option>
-            <mat-option>Option 1</mat-option>
-            <mat-option value="option2">Option 2</mat-option>
-            <mat-option value="option3">Option 3</mat-option>
-          </mat-select>
-        </mat-form-field> -->
-
-        <!-- Empty -->
-        <div
-          class="flex flex-row cursor-pointer filter hover:saturate-100 rounded-md pl-2"
-          [class.saturate-0]="config.selectedCountry !== country.country_code"
-          [class.bg-primary]="config.selectedCountry === country.country_code"
-          *ngFor="let country of countries | search: search"
-          (click)="setCountry(country.country_code)">
-          <div
-            class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden hover:opacity-80"
-            [class.border-primary]="config.selectedCountry === country.country_code">
-            <div
-              class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
-              [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div>
-          </div>
-          <div
-            class="flex flex-1 items-center text-md font-medium text-center text-secondary"
-            [class.text-on-primary]="config.selectedCountry === country.country_code">
-            {{ country.country_name}}
-          </div>
-        </div>
       </div>
 
     </div>
@@ -233,28 +116,8 @@
       <!-- Layout -->
       <div class="text-md font-semibold text-secondary">Filters</div>
       <div class="flex flex-col mt-3">
-        <div
-          class
-          (click)="addFilter()">
-          Add Filter
-        </div>
-        <div
-          class="flex"
-          *ngFor="let filter of config.filters;trackBy: trackByFilter; ;let idx = index">
-          {{ filter.type }} |
-          <mat-form-field class="flex-1">
-            <input
-              matInput
-              type="number"
-              [ngModel]="filter.value"
-              (ngModelChange)="updateFilterValue(idx, $event)">
-          </mat-form-field>
-          <div
-            (click)="removeFilter(idx)"
-            class>
-            X
-          </div>
-        </div>
+        <range-filters></range-filters>
+
       </div>
 
     </div>

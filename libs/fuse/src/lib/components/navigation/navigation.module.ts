@@ -47,7 +47,9 @@ import { FuseVerticalNavigationComponent } from '@twentythree/fuse/components/na
     ],
     exports     : [
         FuseHorizontalNavigationComponent,
-        FuseVerticalNavigationComponent
+        FuseVerticalNavigationComponent,
+        FuseVerticalNavigationBasicItemComponent,
+        FuseVerticalNavigationGroupItemComponent
     ]
 })
 export class FuseNavigationModule

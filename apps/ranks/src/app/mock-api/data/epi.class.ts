@@ -44,7 +44,9 @@ export class Epi {
   generateTreeItem(item: any) {
     const entry = {
       ...item,
-      ...this.getIndicator(item.id),
+      short: item.name,
+      description: item.description,
+      ...this.getIndicator(item.slug),
     };
 
     if (item.children && item.children.length > 0) {

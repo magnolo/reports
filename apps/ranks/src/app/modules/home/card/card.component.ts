@@ -20,8 +20,10 @@ export class RankCardComponent implements OnInit {
   get activeRank() {
     if (this.item && this.item.ranks && this.item.ranks.length > 0) {
       if (this.selectedCountry) {
-        return this.item.ranks.find(
-          (rank) => rank.country_code === this.selectedCountry
+        return (
+          this.item.ranks.find(
+            (rank) => rank.country_code === this.selectedCountry
+          ) || this.item.ranks[0]
         );
       }
       return this.item.ranks[0];
@@ -51,7 +53,6 @@ export class RankCardComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
   }

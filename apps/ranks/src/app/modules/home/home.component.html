@@ -133,7 +133,7 @@
 
       <rank-card
         *ngFor="let item of category.reports; let idx = index"
-        [class.opacity-30]="item | ranksFilter: selectedCountry: filters "
+        [class.opacity-30]="item | ranksCountry: selectedCountry "
         [report]="item"
         class="h-full">
       </rank-card>

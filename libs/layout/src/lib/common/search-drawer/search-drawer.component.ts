@@ -115,35 +115,4 @@ export class SearchDrawerComponent implements OnInit, OnDestroy {
     this._fuseConfigService.config = { theme };
   }
 
-  setCountry(selectedCountry: string) {
-    if (this.config.selectedCountry === selectedCountry || !selectedCountry) {
-      this._fuseConfigService.config = { selectedCountry: undefined };
-    } else {
-      this._fuseConfigService.config = { selectedCountry };
-    }
-  }
-
-  addFilter() {
-    this._fuseConfigService.config = {
-      filters: [...this.config.filters, { type: 'top', value: 5 }],
-    };
-  }
-
-  removeFilter(idx: number) {
-    this.config.filters.splice(idx, 1);
-    this._fuseConfigService.config = {
-      filters: [...this.config.filters],
-    };
-  }
-
-  updateFilterValue(idx: number, value: number){
-    this.config.filters[idx].value = value;
-    this._fuseConfigService.config = {
-      filters: [...this.config.filters],
-    };
-  }
-
-  trackByFilter = (index: number, item: Filter) => {
-    return item.type;
-  }
 }

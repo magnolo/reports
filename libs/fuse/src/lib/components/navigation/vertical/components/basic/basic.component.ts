@@ -61,14 +61,17 @@ export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestr
         this._changeDetectorRef.markForCheck();
 
         // Subscribe to onRefreshed on the navigation component
-        this._fuseVerticalNavigationComponent.onRefreshed.pipe(
-            takeUntil(this._unsubscribeAll)
-        ).subscribe(() => {
+        if(this._fuseVerticalNavigationComponent){
 
-            // Mark for check
-            this._changeDetectorRef.markForCheck();
-        });
-    }
+          this._fuseVerticalNavigationComponent.onRefreshed.pipe(
+            takeUntil(this._unsubscribeAll)
+            ).subscribe(() => {
+
+              // Mark for check
+              this._changeDetectorRef.markForCheck();
+            });
+          }
+        }
 
     /**
      * On destroy

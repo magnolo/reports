@@ -13,8 +13,6 @@ import * as chroma from 'chroma-js';
 import { FuseConfigService } from '@twentythree/fuse/services/config';
 import { Filter } from '@twentythree/core/config/app.config';
 
-const randomNumber = (max: number) => Math.floor(Math.random() * max);
-
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',

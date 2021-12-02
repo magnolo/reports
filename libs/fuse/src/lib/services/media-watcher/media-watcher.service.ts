@@ -32,14 +32,16 @@ export class FuseMediaWatcherService
                     for ( const [query] of matchingBreakpoints )
                     {
                         // Find the alias of the matching query
-                        // const matchingAlias: string = Object.entries(config.breakpoints).find(([alias, q]) => q === query)[0];
+                        const qe: any = Object.entries(config.breakpoints).find(([alias, q]) => q === query);
+                        const matchingAlias: string | undefined = qe ? qe[0] : undefined;
 
-                        // // Add the matching query to the observable values
-                        // if ( matchingAlias )
-                        // {
-                        //     matchingAliases.push(matchingAlias);
-                        //     matchingQueries[matchingAlias] = query;
-                        // }
+
+                        // Add the matching query to the observable values
+                        if ( matchingAlias )
+                        {
+                            matchingAliases.push(matchingAlias);
+                            matchingQueries[matchingAlias] = query;
+                        }
                     }
 
                     // Execute the observable

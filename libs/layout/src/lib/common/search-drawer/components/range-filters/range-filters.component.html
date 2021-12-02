@@ -1,0 +1,31 @@
+<button
+  mat-flat-button
+  (click)="addFilter()">
+  Add filter
+</button>
+<div
+  class="flex flex-col"
+  *ngFor="let filter of filters;trackBy: trackByFilter; ;let idx = index">
+  {{ filter.type }} |
+  <mat-slider
+    [value]="filter.value"
+    (valueChange)="updateFilterValue(idx, $event)"
+    thumbLabel
+    tickInterval="1"
+    step="1"
+    min="0"
+    max="100"
+    aria-label="units"></mat-slider>
+  <input
+    matInput
+    type="number"
+    [ngModel]="filter.value"
+    (ngModelChange)="updateFilterValue(idx, $event)">
+
+  <button
+    mat-icon-button
+    (click)="removeFilter(idx)">
+    <mat-icon [svgIcon]="'heroicons_outline:close'"></mat-icon>
+  </button>
+
+</div>

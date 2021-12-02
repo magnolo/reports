@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FuseMediaWatcherService } from '@twentythree/fuse/services/media-watcher';
-import { FuseNavigationService, FuseVerticalNavigationComponent } from '@twentythree/fuse/components/navigation';
+import { FuseNavigationItem, FuseNavigationService, FuseVerticalNavigationComponent } from '@twentythree/fuse/components/navigation';
 import { Navigation } from '@twentythree/core/navigation/navigation.types';
 import { NavigationService } from '@twentythree/core/navigation/navigation.service';
 
@@ -15,9 +15,47 @@ import { NavigationService } from '@twentythree/core/navigation/navigation.servi
 export class DenseLayoutComponent implements OnInit, OnDestroy
 {
     isScreenSmall!: boolean;
+    menuOpen!: boolean;
+    lockMenu: boolean = false;
     navigation!: Navigation;
     navigationAppearance: 'default' | 'dense' = 'dense';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+
+    countryFilter: FuseNavigationItem = {
+      id: 'dashboards.analytics',
+      title: 'Analytics',
+      type: 'basic',
+      custom: true,
+      icon: 'heroicons_outline:chart-pie',
+
+    }
+
+    rangeFilter: FuseNavigationItem = {
+      id: 'dashboards.analytics',
+      title: 'Analytics',
+      type: 'basic',
+      custom: true,
+      icon: 'heroicons_outline:chart-pie',
+
+    }
+
+    countryFilterGroup: FuseNavigationItem = {
+      id: 'dashboards',
+      title: 'Country',
+      subtitle: 'Choose a country',
+      type: 'group',
+      icon: 'heroicons_outline:home',
+    }
+
+    rangeFilterGroup: FuseNavigationItem = {
+      id: 'dashboards',
+      title: 'Filter',
+      subtitle: 'Reduce selection',
+      type: 'group',
+      icon: 'heroicons_outline:home',
+    }
+
+
 
     /**
      * Constructor
@@ -57,7 +95,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((navigation: Navigation) => {
-                this.navigation = navigation;
+                // this.navigation = navigation;
             });
 
         // Subscribe to media changes

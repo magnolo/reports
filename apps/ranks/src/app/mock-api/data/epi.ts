@@ -26249,6 +26249,7 @@ export const EPI_DATA = [
 
 export const EPI_TREE = {
   name: 'EPI 2020',
+  description: 'The 2020 Environmental Performance Index (EPI) provides a data-driven summary of the state of sustainability around the world',
   slug: 'EPI',
   children: [
     {

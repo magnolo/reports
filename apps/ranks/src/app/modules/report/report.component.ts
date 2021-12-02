@@ -64,7 +64,7 @@ export class ReportComponent implements OnInit, OnDestroy {
             .centerRadius(0.5)
             .width(size)
             .height(size)
-            .data(this.epiTree)(elem.nativeElement);
+            .data(this.report)(elem.nativeElement);
         }
       });
     }
