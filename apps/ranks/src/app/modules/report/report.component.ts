@@ -16,9 +16,7 @@ import { ApexOptions } from 'ng-apexcharts';
 
 import Sunburst from 'sunburst-chart';
 
-
 import { Rank, Report } from '@twentythree/api-interfaces';
-
 
 import { CountriesData } from 'countries-map';
 import { COUNTRY_CODES } from '../../mock-api/data/countries';
@@ -57,7 +55,11 @@ export class ReportComponent implements OnInit, OnDestroy {
               return node.color || '#ccc';
             })
             .tooltipContent((node: any) => {
-              const rank: any = node.ranks[0];
+              let rank: any = node.ranks[0];
+              if(this.selectedCountry){
+                rank = node.ranks.find((n: any) => n.country_code === this.selectedCountry) || node.ranks[0]
+              }
+
               return `${rank.country_name}: ${rank.score}`;
             })
             .label((node: any) => node.name)
@@ -114,7 +116,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     // this.country = this.epiTree.ranks[0];
     // this.currentIndicator = this.epiTree;
     this.updateStates(this.report);
-    console.log(this.report)
+    console.log(this.report);
 
     this.configService.config$
       .pipe(takeUntil(this._unsubscribeAll))
@@ -134,7 +136,9 @@ export class ReportComponent implements OnInit, OnDestroy {
               country_code: c.alpha2Code.toLowerCase(),
             };
             this.updateStates(this.currentIndicator);
-            this.cdr.detectChanges();
+            this.zone.onStable.pipe(take(1)).subscribe(() => {
+              this.cdr.detectChanges();
+            });
           }
         } else {
           this.selectedCountry = undefined;
@@ -161,7 +165,10 @@ export class ReportComponent implements OnInit, OnDestroy {
       );
       if (!c) return;
       this.country = c;
+
       console.log(this.country, node.ranks);
+
+
     } else {
       this.country = node.ranks[0];
     }
@@ -198,6 +205,7 @@ export class ReportComponent implements OnInit, OnDestroy {
       result[item.country_code.toUpperCase()] = { ...item, value: item.score };
       return result;
     }, {});
+
   }
 
   setIndMap(indicator: Report) {
@@ -322,9 +330,9 @@ export class ReportComponent implements OnInit, OnDestroy {
     this._route.data.pipe(take(1)).subscribe((data) => {
       console.log('DATA', data);
 
-      if(data && data.report){
+      if (data && data.report) {
         this.report = data.report;
-        this.updateStates(this.report)
+        this.updateStates(this.report);
       }
     });
 
@@ -361,18 +369,18 @@ export class ReportComponent implements OnInit, OnDestroy {
   selectCountry(country: any) {
     if (!country || !country.country) return;
 
-    const c = COUNTRY_CODES.find(
-      (codes) =>
-        codes.alpha2Code.toLocaleLowerCase() === country.country.toLowerCase()
-    );
+    // const c = COUNTRY_CODES.find(
+    //   (codes) =>
+    //     codes.alpha2Code.toLocaleLowerCase() === country.country.toLowerCase()
+    // );
 
-    if (c) {
-      this.selectedCountry = {
-        country_name: c.englishShortName,
-        country_code: c.alpha2Code.toLowerCase(),
-      };
-      this.updateStates(this.currentIndicator);
-    }
+    // if (c) {
+    //   this.selectedCountry = {
+    //     country_name: c.englishShortName,
+    //     country_code: c.alpha2Code.toLowerCase(),
+    //   };
+    //   this.updateStates(this.currentIndicator);
+    // }
   }
 
   removeCountrySelection() {

@@ -19,12 +19,14 @@ import { CountryFilterComponent } from './components/country-filter/country-filt
 import { RangeFiltersComponent } from './components/range-filters/range-filters.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { RegionsFilterComponent } from './components/regions-filter/regions-filter.component';
 @NgModule({
     declarations: [
         SearchDrawerComponent,
         SearchPipe,
         CountryFilterComponent,
         RangeFiltersComponent,
+        RegionsFilterComponent,
 
     ],
     imports     : [
@@ -48,7 +50,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     exports     : [
       SearchDrawerComponent,
       CountryFilterComponent,
-      RangeFiltersComponent
+      RangeFiltersComponent,
+      RegionsFilterComponent
     ]
 })
 export class SearchDrawerModule

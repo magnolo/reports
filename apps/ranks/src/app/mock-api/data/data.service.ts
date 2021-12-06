@@ -1,6 +1,7 @@
+import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, map, Observable, of } from 'rxjs';
+import { EMPTY, map, Observable, of, share, shareReplay } from 'rxjs';
 import { Category, News, Rank, Report } from '@twentythree/api-interfaces';
 import * as faker from 'faker';
 import { COUNTRY_CODES } from './countries';
@@ -13,15 +14,31 @@ export const randomNumberBetween = (min: number, max: number) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 };
-
+const CACHE_SIZE = 1;
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
   private _reports: Map<string, Report> = new Map();
   private _categories?: Category[];
+  private _regions?: any[];
+  private cache$?: Observable<any[]>;
 
   constructor(private httpClient: HttpClient) {}
+
+  getRegions() {
+    if (this._regions && this._regions.length > 0) {
+      return of(this._regions);
+    }
+
+    if (!this.cache$) {
+      this.cache$ = this.httpClient.get<any[]>('/api/regions').pipe(
+        share(),
+        tap((regions) => (this._regions = regions))
+      );
+    }
+    return this.cache$;
+  }
 
   // getRanks() {
   //   return this.httpClient.get<any[]>(`/api/ranks`);

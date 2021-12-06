@@ -35,8 +35,7 @@ export class ReportService {
           )}`,
         },
         type: 'composite',
-        score: randomNumber(100),
-        trend: randomNumber(20),
+        value: randomNumber(100),
         ranks: [
           {
             score: randomNumber(100),

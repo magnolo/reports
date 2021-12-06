@@ -26,6 +26,16 @@
   </ng-container>
 
   <ng-container fuseVerticalNavigationContent>
+    <fuse-vertical-navigation-group-item [item]="regionFilterGroup"></fuse-vertical-navigation-group-item>
+    <fuse-vertical-navigation-basic-item
+      [item]="regionFilter"
+      [name]="'hello'">
+      <regions-filter
+        (openChanged)="lockMenu = $event"
+        [class.w-full]="menuOpen"></regions-filter>
+    </fuse-vertical-navigation-basic-item>
+
+
     <fuse-vertical-navigation-group-item [item]="countryFilterGroup"></fuse-vertical-navigation-group-item>
     <fuse-vertical-navigation-basic-item
       [item]="countryFilter"

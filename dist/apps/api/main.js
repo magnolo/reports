@@ -56,20 +56,22 @@ exports.AppController = AppController;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AppModule = void 0;
 const tslib_1 = __webpack_require__("tslib");
+const regions_service_1 = __webpack_require__("./apps/api/src/app/regions/regions.service.ts");
 const news_component_1 = __webpack_require__("./apps/api/src/app/news/news.component.ts");
-const report_service_1 = __webpack_require__("./apps/api/src/app/report/report.service.ts");
 const common_1 = __webpack_require__("@nestjs/common");
 const app_controller_1 = __webpack_require__("./apps/api/src/app/app.controller.ts");
 const app_service_1 = __webpack_require__("./apps/api/src/app/app.service.ts");
-const report_component_1 = __webpack_require__("./apps/api/src/app/report/report.component.ts");
+const regions_component_1 = __webpack_require__("./apps/api/src/app/regions/regions.component.ts");
 const news_service_1 = __webpack_require__("./apps/api/src/app/news/news.service.ts");
+const report_component_1 = __webpack_require__("./apps/api/src/app/report/report.component.ts");
+const report_service_1 = __webpack_require__("./apps/api/src/app/report/report.service.ts");
 let AppModule = class AppModule {
 };
 AppModule = (0, tslib_1.__decorate)([
     (0, common_1.Module)({
         imports: [common_1.HttpModule],
-        controllers: [app_controller_1.AppController, report_component_1.ReportController, news_component_1.NewsController],
-        providers: [app_service_1.AppService, report_service_1.ReportService, news_service_1.NewsService],
+        controllers: [app_controller_1.AppController, report_component_1.ReportController, news_component_1.NewsController, regions_component_1.RegionsController],
+        providers: [app_service_1.AppService, report_service_1.ReportService, news_service_1.NewsService, regions_service_1.RegionsService],
     })
 ], AppModule);
 exports.AppModule = AppModule;
@@ -188,6 +190,77 @@ exports.NewsService = NewsService;
 
 /***/ }),
 
+/***/ "./apps/api/src/app/regions/regions.component.ts":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RegionsController = void 0;
+const tslib_1 = __webpack_require__("tslib");
+const common_1 = __webpack_require__("@nestjs/common");
+const regions_service_1 = __webpack_require__("./apps/api/src/app/regions/regions.service.ts");
+let RegionsController = class RegionsController {
+    constructor(regionsService) {
+        this.regionsService = regionsService;
+    }
+    getRegions() {
+        return this.regionsService.getRegions();
+    }
+};
+(0, tslib_1.__decorate)([
+    (0, common_1.Get)(),
+    (0, tslib_1.__metadata)("design:type", Function),
+    (0, tslib_1.__metadata)("design:paramtypes", []),
+    (0, tslib_1.__metadata)("design:returntype", void 0)
+], RegionsController.prototype, "getRegions", null);
+RegionsController = (0, tslib_1.__decorate)([
+    (0, common_1.Controller)('regions'),
+    (0, tslib_1.__metadata)("design:paramtypes", [typeof (_a = typeof regions_service_1.RegionsService !== "undefined" && regions_service_1.RegionsService) === "function" ? _a : Object])
+], RegionsController);
+exports.RegionsController = RegionsController;
+
+
+/***/ }),
+
+/***/ "./apps/api/src/app/regions/regions.service.ts":
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+var _a;
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RegionsService = void 0;
+const tslib_1 = __webpack_require__("tslib");
+const operators_1 = __webpack_require__("rxjs/operators");
+const common_1 = __webpack_require__("@nestjs/common");
+const environment_1 = __webpack_require__("./apps/api/src/environments/environment.ts");
+let RegionsService = class RegionsService {
+    constructor(httpService) {
+        this.httpService = httpService;
+        this.url = `${environment_1.environment.api.baseUrl}regions`;
+    }
+    getRegions() {
+        // 'https://app.23degrees.io/api/v2/regions?space=public&mappingid=world_countries_disputed&page=0&page_size=50'
+        console.log(`${this.url}?space=public&mappingid=world_countries_disputed&page=0&page_size=100`);
+        console.log('Bearer ' + environment_1.environment.api.token);
+        return this.httpService
+            .get(`${this.url}?space=public&mappingid=world_countries_disputed&page=0&page_size=100`, {
+            headers: {
+                Authorization: 'Bearer ' + environment_1.environment.api.token,
+            },
+        })
+            .pipe((0, operators_1.map)((response) => response.data.payload), (0, operators_1.tap)((data) => console.log(data)));
+    }
+};
+RegionsService = (0, tslib_1.__decorate)([
+    (0, common_1.Injectable)(),
+    (0, tslib_1.__metadata)("design:paramtypes", [typeof (_a = typeof common_1.HttpService !== "undefined" && common_1.HttpService) === "function" ? _a : Object])
+], RegionsService);
+exports.RegionsService = RegionsService;
+
+
+/***/ }),
+
 /***/ "./apps/api/src/app/report/report.component.ts":
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
@@ -266,8 +339,7 @@ let ReportService = class ReportService {
                     url: `https://source.unsplash.com/random/800x600?sig=${randomNumber(1000)}`,
                 },
                 type: 'composite',
-                score: randomNumber(100),
-                trend: randomNumber(20),
+                value: randomNumber(100),
                 ranks: [
                     {
                         score: randomNumber(100),
@@ -313,6 +385,23 @@ ReportService = (0, tslib_1.__decorate)([
     (0, tslib_1.__metadata)("design:paramtypes", [typeof (_a = typeof common_1.HttpService !== "undefined" && common_1.HttpService) === "function" ? _a : Object])
 ], ReportService);
 exports.ReportService = ReportService;
+
+
+/***/ }),
+
+/***/ "./apps/api/src/environments/environment.ts":
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.environment = void 0;
+exports.environment = {
+    production: false,
+    api: {
+        baseUrl: 'https://app.23degrees.io/api/v2/',
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDIxMGI4YTAzYzZiYTAwMWQ1MmZiYzEiLCJlbWFpbCI6InJhbmtpbmdzQDIzZGVncmVlcy5pbyIsInNsdWciOiJyYW5raW5ncy11bmQtbW9uaXRvcmluZyIsInJvbGVzIjpbIjVkNDhhYmM1ODMxODZjMDAxZWY2Yzc5MCIsIjVmNjQ5MDdjY2JkMDBkMDAxYzViMDhlZSIsIjVkNDhhYmM1ODMxODZjMDAxZWY2Yzc5MSIsIjVkNGFlZDBlMmU1YTMxMDAyMDY0ZWEzMSIsIjVkNGFlZDI5MmU1YTMxMDAyMDY0ZWEzMiIsIjVmMmFjYTQwZTJmNmQzMDAxZGMyZDgyMCIsIjVlZDExNzdkZGE4YTc3MDAxZDJhZDJiYSIsIjVmZTA1MWNmYWU3YTcyMDAxY2VkODUyYSJdLCJpYXQiOjE2MzczMTM3MDl9.oogUWwv2VubvXiOvSXSTt0VKb9TI_bBA6qtOjXp0uVY',
+    }
+};
 
 
 /***/ }),

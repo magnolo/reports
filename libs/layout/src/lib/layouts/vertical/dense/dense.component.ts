@@ -34,6 +34,14 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
     icon: 'heroicons_outline:chart-pie',
   };
 
+  regionFilter: FuseNavigationItem = {
+    id: 'dashboards.analytics',
+    title: 'Analytics',
+    type: 'basic',
+    custom: true,
+    icon: 'heroicons_outline:chart-pie',
+  };
+
   rangeFilter: FuseNavigationItem = {
     id: 'dashboards.analytics',
     title: 'Analytics',
@@ -50,10 +58,18 @@ export class DenseLayoutComponent implements OnInit, OnDestroy {
     icon: 'heroicons_outline:home',
   };
 
+  regionFilterGroup: FuseNavigationItem = {
+    id: 'dashboards',
+    title: 'Region',
+    subtitle: 'Choose a Region',
+    type: 'group',
+    icon: 'heroicons_outline:home',
+  };
+
   rangeFilterGroup: FuseNavigationItem = {
     id: 'dashboards',
     title: 'Filter',
-    subtitle: 'Reduce selection',
+    subtitle: 'Country groups',
     type: 'group',
     icon: 'heroicons_outline:home',
   };
