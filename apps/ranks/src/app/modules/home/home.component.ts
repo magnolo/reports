@@ -12,6 +12,7 @@ import { Category, News } from '@twentythree/api-interfaces';
 import * as chroma from 'chroma-js';
 import { FuseConfigService } from '@twentythree/fuse/services/config';
 import { Filter } from '@twentythree/core/config/app.config';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'home',
@@ -19,6 +20,14 @@ import { Filter } from '@twentythree/core/config/app.config';
   styleUrls: ['./home.component.scss'],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('swap', [
+      // state('void', style({ opacity: 0, transform: 'translateY(10%)' })),
+      // state('*', style({ opacity: 1, transform: 'translateY(0%)' })),
+      //transition('void => *', [style({ transform: 'translateY(50px) rotateX(-90deg) scale(0.95)', opacity: 0}), animate('0.25s 0.2s ease-in',style({ transform: 'translateY(0%) rotateX(0deg) scale(1)', opacity: 1}))]),
+      transition('* => void', [style({ opacity: 1}), animate('1s ease-out', style({ opacity: 0}))])
+    ])
+  ],
 })
 export class HomeComponent {
   categories$!: Observable<Category[]>;

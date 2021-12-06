@@ -1,6 +1,8 @@
 <fuse-card class="flex flex-col filter-article justify-between content-between rounded-md relative h-full">
   <div
-    class="absolute bg-cover w-full h-full top-0 left-0"
+    [class.opacity-30]="notValid"
+    class="absolute bg-cover w-full h-full top-0 left-0  transition-opacity duration-150"
+
     [style.backgroundImage]="'url('+ item.image.url +')'">
     <div class="h-full w-full bg-gradient-to-b from-black opacity-70"></div>
   </div>
@@ -80,9 +82,14 @@
       </div>
     </div> -->
 
-    <country-rank
-      class="w-full"
-      [rank]="activeRank"></country-rank>
+    <div class="flex flex-1 flex-col relative w-full transition-opacity duration-150 hover:opacity-100" style="min-height: 116px; perspective: 800px;" [class.opacity-30]="notValid">
+      <country-rank
+        class="w-full absolute bottom-0"
+        *ifChanges="activeRank?.country_code"
+        [@myTrigger]
+        [rank]="activeRank"></country-rank>
+
+    </div>
 
     <!-- <div class="flex flex-col justify-end flex-auto w-full">
        <apx-chart

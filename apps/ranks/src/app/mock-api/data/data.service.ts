@@ -96,8 +96,9 @@ export class DataService {
     for (let i = 0; i < count; i++) {
       const name = faker.commerce.productName();
       const slug = `report-${faker.lorem.slug()}`;
-
-      if (countryCodes.length === 0 && lvl === 0) {
+      // console.log('generate report', name, countryCodes, lvl)
+      // countryCodes.length === 0 &&
+      if (lvl === 0) {
         const random = randomNumberBetween(
           COUNTRY_CODES.length / 2,
           COUNTRY_CODES.length

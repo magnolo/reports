@@ -16,7 +16,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseCardModule } from '@twentythree/fuse/components/card';
 import { HomeComponent } from './home.component';
 import { SharedModule } from '@twentythree/shared';
-import { RankCardComponent } from './card/card.component';
+import { IfChangesDirective, RankCardComponent } from './card/card.component';
 
 
 export const routes: Route[] = [
@@ -33,7 +33,8 @@ export const routes: Route[] = [
 @NgModule({
     declarations: [
         HomeComponent,
-        RankCardComponent
+        RankCardComponent,
+        IfChangesDirective
     ],
     imports     : [
         RouterModule.forChild(routes),

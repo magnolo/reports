@@ -1,18 +1,54 @@
 import { Subject, takeUntil } from 'rxjs';
 import { FuseConfigService } from '@twentythree/fuse/services/config';
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 // import { quantileSeq } from 'mathjs';
 import { Report } from '@twentythree/api-interfaces';
 import { Filter } from '@twentythree/core/config/app.config';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+@Directive({
+  selector: '[ifChanges]'
+})
+export class IfChangesDirective {
+  private currentValue: any;
+  private hasView = false;
+
+  constructor(
+    private viewContainer: ViewContainerRef,
+    private templateRef: TemplateRef<any>
+  ) { }
+
+  @Input() set ifChanges(val: any) {
+    if (!this.hasView) {
+      this.viewContainer.createEmbeddedView(this.templateRef);
+      this.hasView = true;
+    } else if (val !== this.currentValue) {
+      this.viewContainer.clear();
+      this.viewContainer.createEmbeddedView(this.templateRef);
+      this.currentValue = val;
+    }
+  }
+}
+
 @Component({
   selector: 'rank-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
+  animations: [
+    trigger('myTrigger', [
+      // state('void', style({ opacity: 0, transform: 'translateY(10%)' })),
+      // state('*', style({ opacity: 1, transform: 'translateY(0%)' })),
+      transition('void => *', [style({ transform: 'translateY(50px) rotateX(-90deg) scale(0.95)', opacity: 0}), animate('0.25s 0.2s ease-in',style({ transform: 'translateY(0%) rotateX(0deg) scale(1)', opacity: 1}))]),
+      transition('* => void', [style({ transform: 'translateY(0%) rotateX(0deg)', opacity: 1}), animate('0.25s ease-out', style({ transform: 'translateY(-50px) rotateX(90deg) scale(0.95)', opacity: 0}))])
+    ])
+  ],
 })
 export class RankCardComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   @Input('report') item!: Report;
+
+  @Input() notValid = false;
 
   selectedCountry?: string;
   filters: Filter[] = [];

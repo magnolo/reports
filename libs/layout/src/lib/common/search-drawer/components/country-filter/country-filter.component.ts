@@ -56,8 +56,7 @@ export class CountryFilterComponent implements OnInit {
     }
   }
 
-  selectOpened(open: any){
-    console.log('SELEC', open);
+  selectOpened(open: boolean){
     this.openChanged.emit(open);
   }
 }

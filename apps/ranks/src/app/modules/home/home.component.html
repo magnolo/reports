@@ -132,10 +132,12 @@
     <div class="items-start w-full mt-8 grid grid-cols-auto-fit gap-5">
 
       <rank-card
+        [@swap]
         *ngFor="let item of category.reports | ranksCountryFilter: selectedCountry; let idx = index"
-        [class.opacity-30]="item | ranksFilter: selectedCountry: filters "
+        [notValid]="item | ranksFilter: selectedCountry: filters "
         [report]="item"
-        class="h-full">
+        class="h-full"
+        transition-group-item>
       </rank-card>
 
     </div>

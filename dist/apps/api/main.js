@@ -274,7 +274,7 @@ let ReportService = class ReportService {
                         trend: randomNumber(20),
                         rank: 1,
                         country_code: faker.address.countryCode().toLowerCase(),
-                        country_name: faker.address.country()
+                        country_name: faker.address.country(),
                     },
                 ],
                 indicators_count: randomNumber(40),
@@ -288,10 +288,15 @@ let ReportService = class ReportService {
     }
     getCategories() {
         const categories = [];
+        const names = [
+            'Sustainability and Resources',
+            'Digitalization, Education & Governance',
+            'Economics & Business',
+        ];
         for (let i = 0; i < 5; i++) {
             const category = {
                 slug: `category-${i}`,
-                name: faker.lorem.words(),
+                name: names[i] ? names[i] : faker.lorem.words(),
                 description: faker.lorem.paragraph(),
                 short: faker.lorem.slug(),
                 color: faker.internet.color(),

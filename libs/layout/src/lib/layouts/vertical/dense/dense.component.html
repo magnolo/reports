@@ -30,14 +30,20 @@
     <fuse-vertical-navigation-basic-item
       [item]="countryFilter"
       [name]="'hello'">
-      <country-filter (openChanged)="lockMenu = $event" [class.w-full]="menuOpen"></country-filter>
+      <country-filter
+        (openChanged)="lockMenu = $event"
+        [class.w-full]="menuOpen"></country-filter>
     </fuse-vertical-navigation-basic-item>
-    <fuse-vertical-navigation-group-item [item]="rangeFilterGroup"></fuse-vertical-navigation-group-item>
-    <fuse-vertical-navigation-basic-item
-      [item]="rangeFilter"
-      [name]="'hello'">
-      <range-filters></range-filters>
-    </fuse-vertical-navigation-basic-item>
+
+    <ng-container *ngIf="!!selectedCountry">
+      <fuse-vertical-navigation-group-item [item]="rangeFilterGroup"></fuse-vertical-navigation-group-item>
+      <fuse-vertical-navigation-basic-item
+        [item]="rangeFilter"
+        [name]="'hello'">
+        <range-filters></range-filters>
+      </fuse-vertical-navigation-basic-item>
+
+    </ng-container>
 
   </ng-container>
 </fuse-vertical-navigation>
