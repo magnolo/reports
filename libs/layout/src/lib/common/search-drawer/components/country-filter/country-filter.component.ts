@@ -5,7 +5,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { AppConfig } from '@twentythree/core/config/app.config';
 import { COUNTRY_CODES } from 'apps/ranks/src/app/mock-api/data/countries';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'country-filter',
@@ -24,7 +23,6 @@ export class CountryFilterComponent implements OnInit {
     country_code: country.alpha2Code.toLocaleLowerCase(),
   }));
 
-  public bankFilterCtrl: FormControl = new FormControl();
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 

@@ -2,7 +2,6 @@ import { take } from 'rxjs/operators';
 import { DataService } from './../../../../../../../../apps/ranks/src/app/mock-api/data/data.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
-import { FormControl } from '@angular/forms';
 import { FuseConfigService } from '@twentythree/fuse/services/config';
 
 @Component({
@@ -14,8 +13,6 @@ export class RegionsFilterComponent implements OnInit {
   @Output() openChanged = new EventEmitter();
 
   public regions!: any[];
-
-  public bankFilterCtrl: FormControl = new FormControl();
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 

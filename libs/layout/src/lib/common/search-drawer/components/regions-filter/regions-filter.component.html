@@ -27,7 +27,7 @@
         <mat-select-trigger>
           <div class="flex flex-1 flex-col leading-tight text-left">
             <ng-container *ngIf="selectedFullRegion">
-              <div class="font-medium">{{ selectedFullRegion.name}}</div>
+              <div class="font-medium whitespace-nowrap overflow-ellipsis overscroll-none">{{ selectedFullRegion.name}}</div>
               <div class="opacity-70 whitespace-nowrap overflow-ellipsis overscroll-none">{{ selectedFullRegion.longname}}</div>
             </ng-container>
             <ng-container *ngIf="!selectedFullRegion">
@@ -38,7 +38,7 @@
         <mat-option>
           <ngx-mat-select-search
             [(ngModel)]="search"
-            [formControl]="bankFilterCtrl"></ngx-mat-select-search>
+            ></ngx-mat-select-search>
         </mat-option>
         <mat-option
           class="h-16"
@@ -55,8 +55,8 @@
           <div
             class="flex flex-1 flex-col leading-tight align-middle content-center"
             [class.text-on-primary]="selectedRegion === region._id">
-            <div class="font-medium">{{ region.name}}</div>
-            <div class="opacity-70">{{ region.longname}}</div>
+            <div class="font-medium whitespace-nowrap overflow-ellipsis overscroll-none">{{ region.name}}</div>
+            <div class="opacity-70 whitespace-nowrap overflow-ellipsis overscroll-none">{{ region.longname}}</div>
           </div>
 
         </mat-option>

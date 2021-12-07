@@ -32,9 +32,7 @@ export class RanksFilterPipe implements PipeTransform {
   ): any {
     if (!countryCode || filters.length === 0) return false;
 
-    this.evaluate(report, countryCode, filters, regionCountries);
-
-    return this.latestValue;
+    return this.evaluate(report, countryCode, filters, regionCountries);
   }
 
   evaluate(
@@ -59,8 +57,7 @@ export class RanksFilterPipe implements PipeTransform {
       if (rank) {
         filters.forEach((filter) => {
           mainIsValid =
-            passFilter(ranks, countryCode, filter.type, filter.value) >
-            0;
+            passFilter(ranks, countryCode, filter.type, filter.value) > 0;
           // eslint-disable-next-line no-case-declarations
           const subIndicatorsCount = getRanks(
             report,
