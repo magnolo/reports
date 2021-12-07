@@ -1,6 +1,8 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { take } from 'rxjs';
+import { ChangeDetectorRef, Pipe, PipeTransform } from '@angular/core';
 import { Rank, Report } from '@twentythree/api-interfaces';
 import { Filter } from '@twentythree/core/config/app.config';
+import { DataService } from 'apps/ranks/src/app/mock-api/data/data.service';
 import { containsCountry, getRanks, passFilter } from './ranks-filter.utils';
 
 /**
@@ -11,24 +13,52 @@ import { containsCountry, getRanks, passFilter } from './ranks-filter.utils';
   pure: false,
 })
 export class RanksCountryFilterPipe implements PipeTransform {
+  countryReports?: any;
+
   /**
    * Constructor
    */
-  constructor() {}
+  constructor(
+    private _dataService: DataService,
+    private _ref: ChangeDetectorRef
+  ) {}
 
   transform(
     reports: Report[] | undefined,
     countryCode: string | undefined,
-
+    regionCountries: string[] = []
   ): Report[] | undefined {
-    if(!reports) return;
+    if (!reports) return;
 
-    if (!countryCode ) return reports;
+    if (!countryCode && regionCountries.length === 0) return reports;
 
-    const r = reports.filter((report) =>
-      report.ranks.map((rank) => rank.country_code).includes(countryCode)
-    );
+    if (regionCountries && regionCountries.length > 0) {
+      if (
+        countryCode &&
+        !regionCountries.some((code) => code === countryCode)
+      ) {
+        return [];
+      }
 
-    return r;
+      const regionReports = reports.filter((report) =>
+        report.ranks
+          .map((rank) => rank.country_code)
+          .some((code) => regionCountries.includes(code))
+      );
+
+      if (countryCode) {
+        return regionReports.filter((report) =>
+          report.ranks.map((rank) => rank.country_code).includes(countryCode)
+        );
+      } else {
+        return regionReports;
+      }
+    } else if (countryCode) {
+      return reports.filter((report) =>
+        report.ranks.map((rank) => rank.country_code).includes(countryCode)
+      );
+    }
+
+    return reports;
   }
 }

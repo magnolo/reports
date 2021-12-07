@@ -10,6 +10,10 @@ import { FUSE_APP_CONFIG } from './config.constants';
 export class FuseConfigService {
   private _config: BehaviorSubject<any>;
 
+  public regionCountries$: BehaviorSubject<string[]> = new BehaviorSubject<
+    string[]
+  >([]);
+
   /**
    * Constructor
    */
@@ -50,27 +54,26 @@ export class FuseConfigService {
       config.selectedRegion = undefined;
     }
 
-    if (config.selectedRegion && config.selectedCountry) {
+    if (config.selectedRegion) {
       this._dataService
-        .getRegions()
+        .getRegionCountries(config.selectedRegion)
         .pipe(take(1))
-        .subscribe((regions) => {
-          const selectedRegion = regions.find(
-            (r) => r._id === config.selectedRegion
-          );
-          // console.log('selectedRegion', selectedRegion);
-          const countryExistsInRegion = selectedRegion.subregions.some(
-            (subRegion: any) =>
-              subRegion.code.substring(2).toLocaleLowerCase() ===
-              config.selectedCountry
-          );
-          if (!countryExistsInRegion) {
-            config.selectedCountry = undefined;
+        .subscribe((countryCodes) => {
+          config.selectedRegionCountries = countryCodes;
+
+          if (config.selectedCountry) {
+            const countryExistsInRegion = countryCodes.some(
+              (subRegion: any) => subRegion === config.selectedCountry
+            );
+            if (!countryExistsInRegion) {
+              config.selectedCountry = undefined;
+            }
           }
-          console.log('SET GET config', config, value);
+
           this._config.next(config);
         });
     } else {
+      config.selectedRegionCountries = [];
       console.log('SET GET config', config, value);
       // Execute the observable
       this._config.next(config);

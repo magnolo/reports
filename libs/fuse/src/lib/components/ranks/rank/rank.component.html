@@ -1,28 +1,36 @@
 <div class="flex bg-white w-full p-4 rounded-md shadow-sm">
   <div class="flex flex-col text-center  ">
-    <div class="bg-accent p-1 px-2 text-on-accent text-sm rounded-tl-sm rounded-tr-sm">Global ranking</div>
+    <div class="bg-accent p-1 px-2 text-on-accent text-sm rounded-tl-sm rounded-tr-sm">
+      <ng-container *ngIf="!!region; else globalRegionTemplate">{{ region.name }} ranking</ng-container>
+      <ng-template #globalRegionTemplate>Global ranking</ng-template>
+
+    </div>
     <div class="text-3xl font-bold p-2 border-solid border-accent border-2 rounded-bl-sm rounded-br-sm text-accent">
-      {{ item.rank }}<sup>st</sup>
+      {{ item.rank }}
+      <sup>st</sup>
     </div>
   </div>
   <div class="flex text-center flex-col flex-auto justify-center flex-1 text-accent">
     <div class="text-3xl font-bold leading-tight">{{ item.country_name }}</div>
 
     <div class="flex w-full justify-around">
+
       <div class="flex flex-col items-center">
         <div class="text-lg font-medium tracking-tight leading-6 truncate">Score</div>
         <div class="text-3xl font-semibold tracking-tight leading-tight">{{ item.score }}</div>
-
       </div>
+
       <div class="flex flex-col items-center">
         <div class="text-lg font-medium tracking-tight leading-6 truncate">Trend</div>
-        <div class="text-3xl font-semibold tracking-tight leading-tight"><ng-container *ngIf="item.trend > 0">+</ng-container>{{ item.trend }}</div>
-
+        <div class="text-3xl font-semibold tracking-tight leading-tight">
+          <ng-container *ngIf="item.trend > 0">+</ng-container>
+          {{ item.trend }}
+        </div>
       </div>
+
     </div>
   </div>
   <div class="w-20 flex items-center ">
-    <img
-      [src]="'assets/images/countries/all/' + countryCode + '/vector.svg'">
+    <img [src]="'assets/images/countries/all/' + countryCode + '/vector.svg'">
   </div>
 </div>

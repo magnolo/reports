@@ -18,45 +18,47 @@
     <div class="fuse-vertical-navigation-item-title w-full">
       <mat-select
         #select
-        [placeholder]="'None'"
+        [placeholder]="'Worldwide'"
         (click)="selectOpened(true)"
         (openedChange)="selectOpened($event)"
         class="flex flex-1"
         [value]="selectedRegion"
         (valueChange)="setRegion($event)">
+        <mat-select-trigger>
+          <div class="flex flex-1 flex-col leading-tight text-left">
+            <ng-container *ngIf="selectedFullRegion">
+              <div class="font-medium">{{ selectedFullRegion.name}}</div>
+              <div class="opacity-70 whitespace-nowrap overflow-ellipsis overscroll-none">{{ selectedFullRegion.longname}}</div>
+            </ng-container>
+            <ng-container *ngIf="!selectedFullRegion">
+              <div class="font-medium">Worldwide</div>
+            </ng-container>
+          </div>
+        </mat-select-trigger>
         <mat-option>
           <ngx-mat-select-search
             [(ngModel)]="search"
             [formControl]="bankFilterCtrl"></ngx-mat-select-search>
         </mat-option>
-        <mat-option [value]="undefined">
-          <div class="flex">
-            <div class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden">
-              <!-- <div
-                class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
-                [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div> -->
-            </div>
-            <div class="flex flex-1 items-center text-md font-medium text-center text-secondary">None</div>
-          </div>
+        <mat-option
+          class="h-16"
+          [value]="undefined">
+
+          <div class="flex flex-1 items-center font-medium align-middle content-center">Worldwide</div>
+
         </mat-option>
         <mat-option
           *ngFor="let region of regions | search: search : 'name'"
+          class="h-16"
           [value]="region._id">
-          <div class="flex">
 
-            <div
-              class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden"
-              [class.border-primary]="selectedRegion === region._id">
-              <!-- <div
-                  class="flex rounded flex-col h-6 w-9 bg-gray-50 dark:bg-gray-900"
-                  [style.backgroundImage]="'url(assets/images/countries/flags/'+country.country_code+'.svg)'"></div> -->
-            </div>
-            <div
-              class="flex flex-1 items-center text-md font-medium text-center text-secondary"
-              [class.text-on-primary]="selectedRegion === region._id">
-              {{ region.name}}
-            </div>
+          <div
+            class="flex flex-1 flex-col leading-tight align-middle content-center"
+            [class.text-on-primary]="selectedRegion === region._id">
+            <div class="font-medium">{{ region.name}}</div>
+            <div class="opacity-70">{{ region.longname}}</div>
           </div>
+
         </mat-option>
 
       </mat-select>

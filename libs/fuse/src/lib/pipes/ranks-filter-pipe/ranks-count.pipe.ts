@@ -20,20 +20,28 @@ export class RanksCountPipe implements PipeTransform {
     report: Report,
     countryCode: string | undefined,
     filters?: Filter[],
+    regionCountries: string[] = [],
     valueField: string = 'score'
   ): any {
     if (!countryCode || !filters || filters.length === 0)
       return report.indicators_count;
 
-    const rank: Rank | undefined = report.ranks.find(
+    let ranks = report.ranks;
+    if (regionCountries && regionCountries.length > 0) {
+      ranks = report.ranks.filter((rank) =>
+        regionCountries.includes(rank.country_code)
+      );
+    }
+
+    const rank: Rank | undefined = ranks.find(
       (entry) => entry.country_code === countryCode
     );
+
     let subFound = 0;
 
     if (rank) {
       filters.forEach((filter) => {
-        // eslint-disable-next-line no-case-declarations
-        subFound = getRanks(report, countryCode, filter.type, filter.value);
+        subFound = getRanks(report, countryCode, filter.type, filter.value, regionCountries);
       });
     }
 

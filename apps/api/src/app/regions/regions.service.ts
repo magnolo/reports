@@ -10,10 +10,10 @@ export class RegionsService {
 
   getRegions() {
     // 'https://app.23degrees.io/api/v2/regions?space=public&mappingid=world_countries_disputed&page=0&page_size=50'
-    console.log(
-      `${this.url}?space=public&mappingid=world_countries_disputed&page=0&page_size=100`
-    );
-    console.log('Bearer ' + environment.api.token);
+    // console.log(
+    //   `${this.url}?space=public&mappingid=world_countries_disputed&page=0&page_size=100`
+    // );
+    // console.log('Bearer ' + environment.api.token);
     return this.httpService
       .get(
         `${this.url}?space=public&mappingid=world_countries_disputed&page=0&page_size=100`,
@@ -23,6 +23,11 @@ export class RegionsService {
           },
         }
       )
-      .pipe(  map((response) => response.data.payload), tap((data) => console.log(data)));
+      .pipe(
+        map((response) =>
+          response.data.payload.sort((a, b) => (a.name < b.name ? -1 : 1))
+        ),
+        tap((data) => console.log(data))
+      );
   }
 }

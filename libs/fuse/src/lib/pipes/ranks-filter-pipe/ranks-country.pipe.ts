@@ -16,13 +16,26 @@ export class RanksCountryPipe implements PipeTransform {
    */
   constructor() {}
 
-  transform(report: Report, countryCode: string | undefined): any {
+  transform(
+    report: Report,
+    countryCode: string | undefined,
+    regionCountries: string[] = []
+  ): any {
     if (!countryCode) return false;
 
-    let countryInRank = containsCountry(report.ranks, countryCode) > 0;
+    let ranks = report.ranks;
+    if (regionCountries && regionCountries.length > 0) {
+      ranks = report.ranks.filter((rank) =>
+        regionCountries.includes(rank.country_code)
+      );
+    }
+
+    let countryInRank = containsCountry(ranks, countryCode) > 0;
 
     if (!countryInRank) {
-      countryInRank = getRanks(report, countryCode, 'country') > 0;
+      countryInRank =
+        getRanks(report, countryCode, 'country', undefined, regionCountries) >
+        0;
     }
 
     return !countryInRank;

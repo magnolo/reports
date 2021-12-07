@@ -1,13 +1,27 @@
 import { Subject, takeUntil } from 'rxjs';
 import { FuseConfigService } from '@twentythree/fuse/services/config';
-import { ChangeDetectorRef, Component, Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Directive,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewContainerRef,
+} from '@angular/core';
 // import { quantileSeq } from 'mathjs';
 import { Report } from '@twentythree/api-interfaces';
 import { Filter } from '@twentythree/core/config/app.config';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 @Directive({
-  selector: '[ifChanges]'
+  selector: '[ifChanges]',
 })
 export class IfChangesDirective {
   private currentValue: any;
@@ -16,7 +30,7 @@ export class IfChangesDirective {
   constructor(
     private viewContainer: ViewContainerRef,
     private templateRef: TemplateRef<any>
-  ) { }
+  ) {}
 
   @Input() set ifChanges(val: any) {
     if (!this.hasView) {
@@ -38,9 +52,30 @@ export class IfChangesDirective {
     trigger('myTrigger', [
       // state('void', style({ opacity: 0, transform: 'translateY(10%)' })),
       // state('*', style({ opacity: 1, transform: 'translateY(0%)' })),
-      transition('void => *', [style({ transform: 'translateY(50px) rotateX(-90deg) scale(0.95)', opacity: 0}), animate('0.25s 0.2s ease-in',style({ transform: 'translateY(0%) rotateX(0deg) scale(1)', opacity: 1}))]),
-      transition('* => void', [style({ transform: 'translateY(0%) rotateX(0deg)', opacity: 1}), animate('0.25s ease-out', style({ transform: 'translateY(-50px) rotateX(90deg) scale(0.95)', opacity: 0}))])
-    ])
+      transition('void => *', [
+        style({
+          transform: 'translateY(50px) rotateX(-90deg) scale(0.95)',
+          opacity: 0,
+        }),
+        animate(
+          '0.25s 0.2s ease-in',
+          style({
+            transform: 'translateY(0%) rotateX(0deg) scale(1)',
+            opacity: 1,
+          })
+        ),
+      ]),
+      transition('* => void', [
+        style({ transform: 'translateY(0%) rotateX(0deg)', opacity: 1 }),
+        animate(
+          '0.25s ease-out',
+          style({
+            transform: 'translateY(-50px) rotateX(90deg) scale(0.95)',
+            opacity: 0,
+          })
+        ),
+      ]),
+    ]),
   ],
 })
 export class RankCardComponent implements OnInit {
@@ -52,19 +87,40 @@ export class RankCardComponent implements OnInit {
 
   selectedCountry?: string;
   filters: Filter[] = [];
+  selectedRegion?: string;
+  selectedRegionCountries: string[] = [];
 
   get activeRank() {
-    if (this.item && this.item.ranks && this.item.ranks.length > 0) {
+    if (this.ranks.length > 0) {
       if (this.selectedCountry) {
-        return (
-          this.item.ranks.find(
+        let rank =
+          this.ranks.findIndex(
             (rank) => rank.country_code === this.selectedCountry
-          ) || this.item.ranks[0]
-        );
+          ) || 0;
+        rank++;
+
+        return {
+          ...(this.ranks.find(
+            (rank) => rank.country_code === this.selectedCountry
+          ) || this.item.ranks[0]),
+          rank,
+        };
       }
-      return this.item.ranks[0];
+      return {...this.ranks[0], rank: 1};
     }
     return;
+  }
+
+  get ranks() {
+    if (this.item?.ranks?.length > 0) {
+      if (this.selectedRegionCountries?.length > 0) {
+        return this.item.ranks.filter((rank) =>
+          this.selectedRegionCountries.includes(rank.country_code)
+        );
+      }
+      return this.item.ranks;
+    }
+    return [];
   }
 
   constructor(
@@ -78,6 +134,8 @@ export class RankCardComponent implements OnInit {
       .subscribe((config) => {
         this.selectedCountry = config.selectedCountry;
         this.filters = config.filters;
+        this.selectedRegion = config.selectedRegion;
+        this.selectedRegionCountries = config.selectedRegionCountries;
         this.cdr.detectChanges();
       });
 

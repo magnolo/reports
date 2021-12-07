@@ -31,17 +31,8 @@
             [(ngModel)]="search"
             [formControl]="bankFilterCtrl"></ngx-mat-select-search>
         </mat-option>
-        <mat-option [value]="undefined">
-          <div class="flex">
-            <div class="flex flex-col h-12 pr-5 items-center justify-center rounded-md overflow-hidden">
-              <div class="flex h-6 w-9 justify-center ">
-                <mat-icon
-                  [svgIcon]="'heroicons_outline:globe'"
-                  ></mat-icon>
-              </div>
-            </div>
-            <div class="flex flex-1 items-center text-md font-medium text-center text-secondary">None</div>
-          </div>
+        <mat-option [value]="undefined" class="h-12">
+          <div class="flex flex-1 items-center font-medium align-middle content-center">None</div>
         </mat-option>
         <mat-option
           *ngFor="let country of countries | search: search"

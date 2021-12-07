@@ -1,7 +1,7 @@
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, map, Observable, of, share, shareReplay } from 'rxjs';
+import { EMPTY, map, Observable, of, share, shareReplay, take } from 'rxjs';
 import { Category, News, Rank, Report } from '@twentythree/api-interfaces';
 import * as faker from 'faker';
 import { COUNTRY_CODES } from './countries';
@@ -26,7 +26,7 @@ export class DataService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getRegions() {
+  getRegions(): Observable<any[]> {
     if (this._regions && this._regions.length > 0) {
       return of(this._regions);
     }
@@ -38,6 +38,29 @@ export class DataService {
       );
     }
     return this.cache$;
+  }
+
+  getRegionById(regionId: string) {
+    return this.getRegions().pipe(
+      take(1),
+      switchMap((regions) =>
+        of(regions.find((region) => region._id === regionId))
+      )
+    );
+  }
+
+  getRegionCountries(regionId: string): Observable<string[]> {
+    return this.getRegions().pipe(
+      take(1),
+      switchMap((regions) => {
+        const region = regions.find((r) => r._id === regionId);
+        return of(
+          region.subregions.map((subRegion: any) =>
+            subRegion.code.substring(2).toLocaleLowerCase()
+          )
+        );
+      })
+    );
   }
 
   // getRanks() {

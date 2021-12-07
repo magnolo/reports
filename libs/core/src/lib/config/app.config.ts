@@ -21,6 +21,7 @@ export interface AppConfig
     theme: Theme;
     selectedCountry?: string,
     selectedRegion?: string,
+    selectedRegionCountries: string[],
     filters: Filter[]
 }
 
@@ -38,5 +39,6 @@ export const appConfig: AppConfig = {
     theme : 'default',
     selectedCountry: undefined,
     selectedRegion: undefined,
+    selectedRegionCountries: [],
     filters: []
 };

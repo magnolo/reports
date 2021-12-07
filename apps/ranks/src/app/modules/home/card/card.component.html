@@ -2,7 +2,6 @@
   <div
     [class.opacity-30]="notValid"
     class="absolute bg-cover w-full h-full top-0 left-0  transition-opacity duration-150"
-
     [style.backgroundImage]="'url('+ item.image.url +')'">
     <div class="h-full w-full bg-gradient-to-b from-black opacity-70"></div>
   </div>
@@ -25,7 +24,7 @@
     </div>
     <div class="mt-6 line-clamp-4 text-white">{{ item.description }}</div>
     <div class="mt-6 -my-4">
-      <ng-container *ngIf="(item | ranksFilter: selectedCountry: filters); else subIndicatorTemplate">
+      <ng-container *ngIf="(item | ranksFilter: selectedCountry: filters : selectedRegionCountries); else subIndicatorTemplate">
         <button
           mat-flat-button
           [color]="'warn'"
@@ -82,7 +81,10 @@
       </div>
     </div> -->
 
-    <div class="flex flex-1 flex-col relative w-full transition-opacity duration-150 hover:opacity-100" style="min-height: 116px; perspective: 800px;" [class.opacity-30]="notValid">
+    <div
+      class="flex flex-1 flex-col relative w-full transition-opacity duration-150 hover:opacity-100"
+      style="min-height: 116px; perspective: 800px;"
+      [class.opacity-30]="notValid">
       <country-rank
         class="w-full absolute bottom-0"
         *ifChanges="activeRank?.country_code"

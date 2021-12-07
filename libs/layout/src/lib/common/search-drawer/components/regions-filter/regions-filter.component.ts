@@ -20,6 +20,7 @@ export class RegionsFilterComponent implements OnInit {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   selectedRegion?: string;
+  selectedFullRegion?: any;
   search = '';
 
   constructor(
@@ -48,8 +49,10 @@ export class RegionsFilterComponent implements OnInit {
   setRegion(selectedRegion: string) {
     if (this.selectedRegion === selectedRegion || !selectedRegion) {
       this._fuseConfigService.config = { selectedRegion: undefined };
+      this.selectedFullRegion = undefined;
     } else {
       this._fuseConfigService.config = { selectedRegion };
+      this.selectedFullRegion = this.regions.find((r) => r._id === selectedRegion);
     }
   }
 

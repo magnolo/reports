@@ -5,7 +5,8 @@ export const getRanks = (
   indicator: Report,
   countryCode: string,
   type: 'top' | 'quantile' | 'country' = 'top',
-  value: number = 5
+  value: number = 5,
+  countryCodes: string[] = []
 ) => {
   let foundInSubIndicators = 0;
 
@@ -14,7 +15,7 @@ export const getRanks = (
       return (
         acc +
         (val.children && Array.isArray(val.children)
-          ? deepCount(val.children, countryCode, type, value)
+          ? deepCount(val.children, countryCode, type, value, countryCodes)
           : 0)
       );
     }, 0);
@@ -54,15 +55,26 @@ export const deepCount: any = (
   reports: Report[] = [],
   countryCode: string,
   type: 'top' | 'quantile' | 'country' = 'top',
-  value: number = 5
+  value: number = 5,
+  countryCodes: string[] = []
 ) => {
   let found = 0;
 
   reports.forEach((report) => {
-    found += passFilter(report.ranks, countryCode, type, value);
+    const ranks = report.ranks.filter((rank) =>
+      countryCodes.length > 0 ? countryCodes.includes(rank.country_code) : true
+    );
+
+    found += passFilter(ranks, countryCode, type, value);
 
     if (report.children && report.children.length > 0) {
-      found += deepCount(report.children, countryCode, type, value);
+      found += deepCount(
+        report.children,
+        countryCode,
+        type,
+        value,
+        countryCodes
+      );
     }
   });
 
